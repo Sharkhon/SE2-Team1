@@ -27,7 +27,7 @@ public abstract class Transaction {
 	}
 	
 	public int getAmount() {
-		return this.amount;
+		return this.amount; 
 	}
 	
 	public LocalDateTime getDate() {
