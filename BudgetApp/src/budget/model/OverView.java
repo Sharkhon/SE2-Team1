@@ -19,6 +19,21 @@ public class OverView {
 	private int unallocatedBalance;
 
 	/**
+	 * Default Constructor
+	 * 
+	 * @precondition overallbalance >= 0
+	 * @postcondition none
+	 * 
+	 * @param overallBalanace
+	 */
+	public OverView() {
+
+		this.categories = new ArrayList<Category>();
+		this.overallBalance = 0;
+		this.unallocatedBalance = 0;
+	}
+
+	/**
 	 * Constructor
 	 * 
 	 * @precondition overallbalance >= 0
@@ -27,7 +42,7 @@ public class OverView {
 	 * @param overallBalanace
 	 */
 	public OverView(int overallBalance) {
-		if(overallBalance < 0) {
+		if (overallBalance < 0) {
 			throw new IllegalArgumentException("overall Balance must be initially positive");
 		}
 
@@ -71,9 +86,43 @@ public class OverView {
 	public int getUnallocatedBalance() {
 		return unallocatedBalance;
 	}
-	
-	public void addCategory(String name) {
-		Category newCat = new Category(name,0,0);
+
+	/**
+	 * Gets the category specified by name and returns it, otherwise returns null
+	 * 
+	 * @precondition name != null
+	 * @postcondition none
+	 * 
+	 * @param name
+	 *            name of the category
+	 * @return the category if
+	 */
+	public Category getSpecificCategory(String name) {
+		if (name == null) {
+			throw new IllegalArgumentException("name cannot be null");
+		}
+		Category category = null;
+		for (Category currCategory : this.categories) {
+			if (currCategory.getName().equalsIgnoreCase(name)) {
+				category = currCategory;
+				return category;
+			}
+		}
+		return category;
+	}
+
+	/**
+	 * Adds a new category by specified name
+	 * 
+	 * @precondition name != null AND name != ""
+	 * @postconditio none
+	 * 
+	 * @param name
+	 *            name of the new category
+	 */
+	public void addNewCategory(String name) {
+
+		Category newCat = new Category(name, 0, 0);
 		this.categories.add(newCat);
 	}
 
