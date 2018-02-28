@@ -105,7 +105,6 @@ public class OverView {
 		for (Category currCategory : this.categories) {
 			if (currCategory.getName().equalsIgnoreCase(name)) {
 				category = currCategory;
-				return category;
 			}
 		}
 		return category;
