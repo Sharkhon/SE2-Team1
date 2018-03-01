@@ -8,5 +8,6 @@ public class Inflow extends Transaction {
 		super(amount, date, title); 
 	}
 
+	
 
 }
