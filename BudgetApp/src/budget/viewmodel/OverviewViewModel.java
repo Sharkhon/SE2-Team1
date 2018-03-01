@@ -29,15 +29,8 @@ public class OverviewViewModel {
 	@FXML
 	private Label UnallocatedAmountLabel;
 	
-	@FXML
-	private TableColumn col1;
-	
-	private ObservableList<Transaction> transaction = FXCollections.observableArrayList();
-	
 	public OverviewViewModel() {
-		this.tableview = new TableView<Transaction>();
-		this.col1 = new TableColumn("col1");
-		
+		this.tableview = new TableView<Transaction>();		
 	}
 	
 	@FXML
@@ -54,6 +47,7 @@ public class OverviewViewModel {
 		
 	}
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void showTransactions() {
 		TableColumn col1 = new TableColumn("Title");
 		col1.setCellValueFactory(new PropertyValueFactory<Transaction, String>("tileCol"));
@@ -63,7 +57,6 @@ public class OverviewViewModel {
 		
 		TableColumn col3 = new TableColumn("Amount");
 		col3.setCellValueFactory(new PropertyValueFactory<Transaction, Double>("amountCol"));
-		
 		
 		
 		this.tableview.getColumns().addAll(col1, col2, col3);

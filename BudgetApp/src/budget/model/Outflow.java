@@ -2,34 +2,21 @@ package budget.model;
 
 import java.time.LocalDateTime;
 
-public class Outflow extends Transaction {
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
-	public Outflow(int amount, LocalDateTime date, String title) {
+public class Outflow extends Transaction {
+	
+	private Category selectedCategory;
+
+	public Outflow(int amount, LocalDateTime date, String title, Category category) {
 		super(amount, date, title);
 		
-		
+		this.selectedCategory = category;
 	}
 
-	/**
-	 * 
-	 */
-	public int getAmount() {
-		return super.getAmount();
-	}
-
-	/**
-	 * 
-	 */
-	public LocalDateTime getDate() {
-		return super.getDate();
-	}
-
-	
-	/**
-	 * 
-	 */
-	public String getTitle() {
-		return super.getTitle();
+	public StringProperty getCategoryName() {
+		return new SimpleStringProperty(this.selectedCategory.getName());
 	}
 
 }
