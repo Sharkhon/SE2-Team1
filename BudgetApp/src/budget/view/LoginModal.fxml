@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="budget.viewmodel.LoadModalController">
+   <children>
+      <Pane prefHeight="200.0" prefWidth="396.0">
+         <children>
+            <TextField fx:id="usernameBox" layoutX="131.0" layoutY="61.0" />
+            <TextField fx:id="passwordBox" layoutX="131.0" layoutY="100.0" />
+            <Text layoutX="197.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login" />
+            <Button fx:id="loginButton" layoutX="188.0" layoutY="145.0" mnemonicParsing="false" onAction="#login" text="Login" />
+            <Text layoutX="52.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username:" />
+            <Text layoutX="53.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password:" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
