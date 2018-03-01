@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import budget.model.Category;
+
 import budget.model.OverView;
 
 class TestConstructor {
