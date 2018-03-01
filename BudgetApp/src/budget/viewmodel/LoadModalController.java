@@ -1,5 +1,9 @@
 package budget.viewmodel;
 
+import java.time.LocalDateTime;
+
+import budget.model.Outflow;
+import budget.model.Transaction;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,6 +35,8 @@ public class LoadModalController {
     }
     
     private void showMainView() {
+    		Transaction yes = new Outflow(0, LocalDateTime.parse("2007-12-03T10:15:30"), "title");
+    	
 		try {
 			Stage primaryStage = new Stage();
 			Parent root = FXMLLoader.load(getClass().getResource("../view/MainView.fxml"));

@@ -2,10 +2,17 @@ package budget.model;
 
 import java.time.LocalDateTime;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 public abstract class Transaction {
-	private int amount;
-	private LocalDateTime date;
-	private String title;
+	private IntegerProperty amount;
+	private ObjectProperty<LocalDateTime> date;
+	private StringProperty title;
 	
 	public Transaction(int amount, LocalDateTime date, String title) {
 		
@@ -21,20 +28,20 @@ public abstract class Transaction {
 			throw new IllegalArgumentException("Invalid name");
 		}
 
-		this.amount = amount;
-		this.date = date;
-		this.title = title;
+		this.amount = new SimpleIntegerProperty(amount);
+		this.date = new SimpleObjectProperty<LocalDateTime>(date);
+		this.title = new SimpleStringProperty(title);
 	}
 	
-	public int getAmount() {
+	public IntegerProperty getAmount() {
 		return this.amount; 
 	}
 	
-	public LocalDateTime getDate() {
+	public ObjectProperty<LocalDateTime> getDate() {
 		return this.date;
 	}
 	
-	public String getTitle() {
+	public StringProperty getTitle() {
 		return this.title;
 	}
 
