@@ -3,7 +3,10 @@
  */
 package budget.model;
 
-import java.util.ArrayList;
+import java.time.LocalDateTime;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  * Defines Overview Class
@@ -14,9 +17,12 @@ import java.util.ArrayList;
  */
 public class OverView {
 
-	private ArrayList<Category> categories;
+	private ObservableList<Transaction> transactions;
+	private ObservableList<Category> categories;
 	private int overallBalance;
 	private int unallocatedBalance;
+	
+	
 
 	/**
 	 * Default Constructor
@@ -26,11 +32,8 @@ public class OverView {
 	 * 
 	 * @param overallBalanace
 	 */
-	public OverView() {
-
-		this.categories = new ArrayList<Category>();
-		this.overallBalance = 0;
-		this.unallocatedBalance = 0;
+	public OverView() {		
+		this(0);
 	}
 
 	/**
@@ -46,7 +49,8 @@ public class OverView {
 			throw new IllegalArgumentException("overall Balance must be initially positive");
 		}
 
-		this.categories = new ArrayList<Category>();
+		this.categories = FXCollections.observableArrayList();
+		this.transactions = FXCollections.observableArrayList();
 		this.overallBalance = overallBalance;
 		this.unallocatedBalance = overallBalance;
 	}
@@ -59,8 +63,20 @@ public class OverView {
 	 * 
 	 * @return list of categories
 	 */
-	public ArrayList<Category> getCategories() {
-		return categories;
+	public ObservableList<Category> getCategories() {
+		return this.categories;
+	}
+	
+	/**
+	 * Get the list of transactions
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @return the list of transactions
+	 */
+	public ObservableList<Transaction> getTransactions() {
+		return this.transactions;
 	}
 
 	/**
@@ -72,7 +88,7 @@ public class OverView {
 	 * @return overall balance
 	 */
 	public int getOverallBalance() {
-		return overallBalance;
+		return this.overallBalance;
 	}
 
 	/**
@@ -84,7 +100,7 @@ public class OverView {
 	 * @return unallocated balance
 	 */
 	public int getUnallocatedBalance() {
-		return unallocatedBalance;
+		return this.unallocatedBalance;
 	}
 
 	/**
@@ -103,7 +119,7 @@ public class OverView {
 		}
 		Category category = null;
 		for (Category currCategory : this.categories) {
-			if (currCategory.getName().equalsIgnoreCase(name)) {
+			if (currCategory.getName().get().equalsIgnoreCase(name)) {
 				category = currCategory;
 			}
 		}
@@ -123,6 +139,20 @@ public class OverView {
 
 		Category newCat = new Category(name, 0, 0);
 		this.categories.add(newCat);
+	}
+	
+	public void addNewCategory(String name, double AllocatedAmount) {
+
+		Category newCat = new Category(name, AllocatedAmount, 0);
+		this.categories.add(newCat);
+	}
+	
+	public void addNewInflow(int amount, LocalDateTime date, String title) {
+		this.transactions.add(new Inflow(amount, date, title));
+	}
+	
+	public void addNewOutflow(int amount, LocalDateTime date, String title, Category category) {
+		this.transactions.add(new Outflow(amount, date, title, category));
 	}
 
 }

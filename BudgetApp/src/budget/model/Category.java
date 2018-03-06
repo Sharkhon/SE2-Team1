@@ -1,5 +1,11 @@
 package budget.model;
 
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 /**
  * Defines Category Class
  * 
@@ -7,10 +13,10 @@ package budget.model;
  * @version 1
  *
  */
-public class Category {
-	private String name;
-	private int allocatedAmount;
-	private int spentAmount;
+public class Category implements Comparable<Category> {
+	private StringProperty name;
+	private DoubleProperty allocatedAmount;
+	private DoubleProperty spentAmount;
 
 	/**
 	 * Constructor for Category
@@ -26,7 +32,7 @@ public class Category {
 	 * @param spentAmount
 	 * 				amount spent out by category
 	 */
-	public Category(String name, int allocatedAmount, int spentAmount) {
+	public Category(String name, double allocatedAmount, double spentAmount) {
 		if(name == null || name.equals("")) {
 			throw new IllegalArgumentException("Must provide valid name for Category");
 		}
@@ -36,9 +42,9 @@ public class Category {
 		if(spentAmount < 0) {
 			throw new IllegalArgumentException("spent amount must be positive amount");
 		}
-		this.name = name;
-		this.allocatedAmount = allocatedAmount;
-		this.spentAmount = spentAmount;
+		this.name = new SimpleStringProperty(name);
+		this.allocatedAmount = new SimpleDoubleProperty(allocatedAmount);
+		this.spentAmount = new SimpleDoubleProperty(spentAmount);
 	}
 
 	/**
@@ -49,8 +55,8 @@ public class Category {
 	 * 
 	 * @return name of category
 	 */
-	public String getName() {
-		return name;
+	public StringProperty getName() {
+		return this.name;
 	}
 
 	/**
@@ -61,8 +67,8 @@ public class Category {
 	 * 
 	 * @return allocated amount
 	 */
-	public int getAllocatedAmount() {
-		return allocatedAmount;
+	public DoubleProperty getAllocatedAmount() {
+		return this.allocatedAmount;
 	}
 
 	/**
@@ -73,8 +79,18 @@ public class Category {
 	 * 
 	 * @return spent amount
 	 */
-	public int getSpentAmount() {
-		return spentAmount;
+	public DoubleProperty getSpentAmount() {
+		return this.spentAmount;
+	}
+
+	public void setAllocatedAmount(int allocatedAmount) {
+		this.allocatedAmount.set(allocatedAmount);
+	}
+	
+	@Override
+	public int compareTo(Category arg0) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

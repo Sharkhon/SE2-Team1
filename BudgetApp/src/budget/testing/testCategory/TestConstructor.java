@@ -48,11 +48,11 @@ class TestConstructor {
 	void testValidConstructor() {
 		Category cat = new Category("Groceries", 500, 40);
 
-		assertEquals("Groceries", cat.getName());
+		assertEquals("Groceries", cat.getName().get());
 
-		assertEquals(500, cat.getAllocatedAmount());
+		assertEquals(500, cat.getAllocatedAmount().get());
 
-		assertEquals(40, cat.getSpentAmount());
+		assertEquals(40, cat.getSpentAmount().get());
 
 	}
 

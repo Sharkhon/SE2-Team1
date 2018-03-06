@@ -31,15 +31,12 @@
    <left>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
    </left>
-   <center>
-      <TableView fx:id="tableview" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-   </center>
    <bottom>
       <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <VBox prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Button fx:id="AddButton" mnemonicParsing="false" text="Add Category?" />
+                  <Button fx:id="AddButton" mnemonicParsing="false" onAction="#addItem" text="Add Item" />
                </children>
                <opaqueInsets>
                   <Insets />
@@ -47,7 +44,7 @@
             </VBox>
             <VBox prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Button fx:id="EditButton" mnemonicParsing="false" text="Edit Category" />
+                  <Button fx:id="EditButton" mnemonicParsing="false" text="Edit Item" />
                </children>
             </VBox>
             <VBox prefHeight="200.0" prefWidth="200.0">
@@ -76,4 +73,34 @@
          </children>
       </HBox>
    </bottom>
+   <center>
+      <Accordion BorderPane.alignment="CENTER">
+        <panes>
+          <TitledPane animated="false" text="Categories">
+               <content>
+                  <TableView fx:id="categoryView" prefHeight="200.0" prefWidth="200.0">
+                     <columns>
+                        <TableColumn fx:id="catNameCol" prefWidth="194.0" text="Name" />
+                        <TableColumn fx:id="catAllocatedCol" prefWidth="144.0" text="Allocated" />
+                        <TableColumn fx:id="catSpentCol" prefWidth="160.0" text="Spent" />
+                     </columns>
+                  </TableView>
+               </content>
+            </TitledPane>
+          <TitledPane animated="false" text="Transactions">
+               <content>
+                  <TableView fx:id="transactionView" prefHeight="200.0" prefWidth="200.0">
+                    <columns>
+                      <TableColumn fx:id="transactionTitleCol" prefWidth="75.0" text="Title" />
+                      <TableColumn fx:id="transactionDateCol" prefWidth="75.0" text="Date" />
+                        <TableColumn fx:id="transactionAmountCol" prefWidth="75.0" text="Amount" />
+                        <TableColumn fx:id="transactionTypeCol" prefWidth="75.0" text="In | Out" />
+                        <TableColumn fx:id="transactionCategory" prefWidth="75.0" text="Category" />
+                    </columns>
+                  </TableView>
+               </content>
+            </TitledPane>
+        </panes>
+      </Accordion>
+   </center>
 </BorderPane>

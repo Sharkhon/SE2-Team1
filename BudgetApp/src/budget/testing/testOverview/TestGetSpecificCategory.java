@@ -1,9 +1,10 @@
 package budget.testing.testOverview;
 
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import budget.model.Category;
+import org.junit.jupiter.api.Test;
+
 import budget.model.OverView;
 
 class TestGetSpecificCategory {

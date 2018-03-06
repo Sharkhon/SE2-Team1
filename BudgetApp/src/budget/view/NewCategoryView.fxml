@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+
+<BorderPane prefHeight="163.0" prefWidth="402.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+   <center>
+      <VBox alignment="TOP_CENTER" prefHeight="284.0" prefWidth="534.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" text="New Category" textAlignment="CENTER" underline="true">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <HBox alignment="CENTER" prefHeight="43.0" prefWidth="534.0">
+               <children>
+                  <Label text="Name:">
+                     <padding>
+                        <Insets right="105.0" />
+                     </padding>
+                  </Label>
+                  <TextField fx:id="categoryNameBox" />
+                  <Label text="*" textFill="RED" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="47.0" prefWidth="534.0">
+               <children>
+                  <Label text="Inital Allocated Amount:" />
+                  <TextField fx:id="initalAllocatedAmount" promptText="Default (0.00)" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="39.0" prefWidth="534.0">
+               <children>
+                  <Button fx:id="CreateNewCategoryButton" defaultButton="true" mnemonicParsing="false" onAction="#CreateNewCategory" text="Create">
+                     <HBox.margin>
+                        <Insets right="25.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="CancelButton" cancelButton="true" mnemonicParsing="false" onAction="#Cancel" text="Cancel" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>
