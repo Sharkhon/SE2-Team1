@@ -1,7 +1,6 @@
 package budget.model;
 
 import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -83,14 +82,31 @@ public class Category implements Comparable<Category> {
 		return this.spentAmount;
 	}
 
-	public void setAllocatedAmount(int allocatedAmount) {
+	public void setAllocatedAmount(double allocatedAmount) {
 		this.allocatedAmount.set(allocatedAmount);
+	}
+	
+	public void setName(String name) {
+		this.name.set(name);
+	}
+	
+	public void setSpentAmount(double amount) {
+		this.spentAmount.set(amount);
+	}
+	
+	public void addToSpentAmount(double amount) {
+		double newAmount = this.spentAmount.get() + amount;
+		this.spentAmount.set(newAmount);
 	}
 	
 	@Override
 	public int compareTo(Category arg0) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	
+	public boolean validEdit(String name, double newAllocatedAmount, double totalUnallocated) {
+		return !name.isEmpty() && totalUnallocated - (newAllocatedAmount - this.allocatedAmount.get()) >= 0;
 	}
 
 }

@@ -18,6 +18,7 @@ public class NewCategoryViewController {
 
 	    @FXML
 	    private TextField initalAllocatedAmount;
+	    private String nameText;
 	    
 	    private OverView overview;
 
@@ -26,7 +27,12 @@ public class NewCategoryViewController {
 		}
 	    
 	    @FXML
-	    void CreateNewCategory(ActionEvent event) {
+	    public void initialize() {
+	    		this.initalAllocatedAmount.setText(this.nameText);
+	    }
+	    
+	    @FXML
+	    public void CreateNewCategory(ActionEvent event) {
 	    		if (!this.categoryNameBox.textProperty().get().isEmpty()) {
 	    			this.overview.addNewCategory(this.categoryNameBox.textProperty().get());
 	    			this.CancelButton.getScene().getWindow().hide();
@@ -34,7 +40,7 @@ public class NewCategoryViewController {
 	    }
 
 	    @FXML
-	    void Cancel(ActionEvent event) {
+	    public void Cancel(ActionEvent event) {
 	    		this.CancelButton.getScene().getWindow().hide();
 	    }
 

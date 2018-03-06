@@ -5,6 +5,8 @@ package budget.model;
 
 import java.time.LocalDateTime;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -19,8 +21,10 @@ public class OverView {
 
 	private ObservableList<Transaction> transactions;
 	private ObservableList<Category> categories;
-	private int overallBalance;
-	private int unallocatedBalance;
+	private double overallBalance;
+	private StringProperty overallBalanceLabel;
+	private double unallocatedBalance;
+	private StringProperty unallocatedBalanceLabel;
 	
 	
 
@@ -44,7 +48,7 @@ public class OverView {
 	 * 
 	 * @param overallBalanace
 	 */
-	public OverView(int overallBalance) {
+	public OverView(double overallBalance) {
 		if (overallBalance < 0) {
 			throw new IllegalArgumentException("overall Balance must be initially positive");
 		}
@@ -53,6 +57,8 @@ public class OverView {
 		this.transactions = FXCollections.observableArrayList();
 		this.overallBalance = overallBalance;
 		this.unallocatedBalance = overallBalance;
+		this.unallocatedBalanceLabel = new SimpleStringProperty(Double.toString(this.unallocatedBalance));
+		this.overallBalanceLabel = new SimpleStringProperty(Double.toString(this.overallBalance));
 	}
 
 	/**
@@ -87,7 +93,7 @@ public class OverView {
 	 * 
 	 * @return overall balance
 	 */
-	public int getOverallBalance() {
+	public double getOverallBalance() {
 		return this.overallBalance;
 	}
 
@@ -99,8 +105,32 @@ public class OverView {
 	 * 
 	 * @return unallocated balance
 	 */
-	public int getUnallocatedBalance() {
+	public double getUnallocatedBalance() {
 		return this.unallocatedBalance;
+	}
+	
+	/**
+	 * Gets the overallBalance property
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @return overall balance
+	 */
+	public StringProperty getOverallBalanceProperty() {
+		return this.overallBalanceLabel;
+	}
+
+	/**
+	 * Gets the unallocated balance property
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @return unallocated balance
+	 */
+	public StringProperty getUnallocatedBalanceProperty() {
+		return this.unallocatedBalanceLabel;
 	}
 
 	/**
@@ -125,6 +155,31 @@ public class OverView {
 		}
 		return category;
 	}
+	
+	public void editCategory(String oldName, String newName, double newAllocatedAmount) {
+		Category selected = this.getSpecificCategory(oldName);
+		
+		double oldAllocatedVal = selected.getAllocatedAmount().get();
+		
+		double netAllocatedChange = newAllocatedAmount - oldAllocatedVal;
+		
+		this.unallocatedBalance -= netAllocatedChange;
+		
+		selected.setAllocatedAmount(newAllocatedAmount);
+		selected.setName(newName);
+		
+		this.updateLabels();
+	}
+	
+	public void updateCategoryAmounts(Category selected, double allocatedAmount, double spentAmount) {
+		double oldAllocatedAmount = selected.getAllocatedAmount().get();
+		selected.setAllocatedAmount(allocatedAmount);
+		this.unallocatedBalance -= allocatedAmount - oldAllocatedAmount;
+		
+		selected.setSpentAmount(spentAmount);
+		
+		this.updateLabels();
+	}
 
 	/**
 	 * Adds a new category by specified name
@@ -145,14 +200,28 @@ public class OverView {
 
 		Category newCat = new Category(name, AllocatedAmount, 0);
 		this.categories.add(newCat);
+		this.unallocatedBalance -= AllocatedAmount;
+		this.updateLabels();
 	}
 	
-	public void addNewInflow(int amount, LocalDateTime date, String title) {
+	public void addNewInflow(double amount, LocalDateTime date, String title) {
 		this.transactions.add(new Inflow(amount, date, title));
+		this.unallocatedBalance += amount;
+		this.overallBalance += amount;
+		
+		this.updateLabels();
 	}
 	
-	public void addNewOutflow(int amount, LocalDateTime date, String title, Category category) {
+	private void updateLabels() {
+		this.unallocatedBalanceLabel.set(Double.toString(this.unallocatedBalance));
+		this.overallBalanceLabel.set(Double.toString(this.overallBalance));
+	}
+	
+	public void addNewOutflow(double amount, LocalDateTime date, String title, Category category) {
 		this.transactions.add(new Outflow(amount, date, title, category));
+		
+		category.addToSpentAmount(amount);
+		
 	}
 
 }

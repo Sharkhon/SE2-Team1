@@ -71,8 +71,8 @@ public class OverviewViewModel {
 	public OverviewViewModel() {
 		this.categoryView = new TableView<Category>();	
 		this.overview = new OverView();
-		this.overview.addNewCategory("name1");
-		this.overview.getSpecificCategory("name1").setAllocatedAmount(10);
+		this.overview.addNewInflow(1000000, LocalDateTime.now(), "Place Holder");
+		this.overview.addNewCategory("name1", 10);
 	}
 	
 	@FXML
@@ -83,6 +83,9 @@ public class OverviewViewModel {
 	private void initailizeValues() {
 		this.showOverview();
 		this.showTransactions();
+		
+		this.TotalAmountLabel.textProperty().bind(this.overview.getOverallBalanceProperty());
+		this.UnallocatedAmountLabel.textProperty().bind(this.overview.getUnallocatedBalanceProperty());
 	}
 	
 	private void showOverview() {
@@ -143,30 +146,56 @@ public class OverviewViewModel {
 		});
 		
 		this.overview.addNewInflow(100, LocalDateTime.now(), "test 1");
-		this.overview.addNewOutflow(200, LocalDateTime.now(), "test 1", new Category("testing", 0, 0));
+		this.overview.addNewOutflow(9.0, LocalDateTime.now(), "test 1", this.overview.getSpecificCategory("name1"));
 		this.transactionView.setItems(this.overview.getTransactions());
-	}
-	
-	private boolean isOverview() {
-		return this.categoryView.isVisible();
 	}
 	
 	@FXML
 	public void addItem() {
-		if(this.isOverview()) {
-			this.showAddCategoryView();
+		if(this.categoryView.isVisible()) {
+			this.showAddCategoryView(new NewCategoryViewController(this.overview));
 		}
-		else 
+		
+		if(this.transactionView.isVisible())
 		{
 			System.out.println("other");
 		}
 	}
 	
-	private void showAddCategoryView() {
+	@FXML
+	public void editItem() {
+		if(this.categoryView.isVisible()) {
+			this.showEditCategoryView(new EditCategoryDialogController(this.overview, this.categoryView.selectionModelProperty().get().getSelectedItem()));
+		}
+		
+		if(this.transactionView.isVisible())
+		{
+			System.out.println("other");
+		}
+	}
+	
+	private void showAddCategoryView(NewCategoryViewController controller) {
 		try {
 			Stage primaryStage = new Stage();
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/NewCategoryView.fxml"));
-			loader.setController(new NewCategoryViewController(this.overview));
+			loader.setController(controller);
+			Parent root = loader.load();
+			
+			Scene scene = new Scene(root, 450, 200);
+			primaryStage.setScene(scene);
+			primaryStage.initOwner(this.AddButton.getScene().getWindow());
+			primaryStage.initModality(Modality.APPLICATION_MODAL);
+			primaryStage.showAndWait();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void showEditCategoryView(EditCategoryDialogController controller) {
+		try {
+			Stage primaryStage = new Stage();
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/EditCategoryDialog.fxml"));
+			loader.setController(controller);
 			Parent root = loader.load();
 			
 			Scene scene = new Scene(root, 450, 200);

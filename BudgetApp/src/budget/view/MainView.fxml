@@ -44,7 +44,7 @@
             </VBox>
             <VBox prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Button fx:id="EditButton" mnemonicParsing="false" text="Edit Item" />
+                  <Button fx:id="EditButton" mnemonicParsing="false" onAction="#editItem" text="Edit Item" />
                </children>
             </VBox>
             <VBox prefHeight="200.0" prefWidth="200.0">
