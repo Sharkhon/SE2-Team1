@@ -6,13 +6,23 @@ import org.junit.jupiter.api.Test;
 
 import budget.model.OverView;
 
-class TestAddCategory {
+class TestAddNewCategory {
 
 	@Test
-	void test() {
+	void testOneParameterMethod() {
 		OverView over = new OverView();
 		
 		over.addNewCategory("Groceries");
+		
+		assertEquals(1,over.getCategories().size());
+		
+	}
+	
+	@Test
+	void testTwoParameterConstructor() {
+		OverView over = new OverView();
+		
+		over.addNewCategory("Groceries",50.00);
 		
 		assertEquals(1,over.getCategories().size());
 		

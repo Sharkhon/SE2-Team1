@@ -1,4 +1,4 @@
-package budget.testing.testOutFlow;
+package budget.testing.testInflow;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -6,22 +6,25 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDateTime;
 
+import org.junit.Rule;
 import org.junit.jupiter.api.Test;
+import org.junit.rules.ExpectedException;
 
 import budget.model.Category;
+import budget.model.Inflow;
 import budget.model.Outflow;
 import budget.model.Transaction;
 
-class TestConstructor {
-
+public class TestConstructor {
+	
 	@Test
 	void testValidConstructor() {
 		LocalDateTime currTime = LocalDateTime.now();
-		Transaction outflow = new Outflow(50, currTime, "bills", new Category("title", 0, 0));
+		Transaction Inflow = new Inflow(50, currTime, "bills");
 		
-		assertEquals("bills", outflow.getTitle().get().toString());
-		assertTrue(currTime.equals(outflow.getDate().getValue()));
-		assertEquals(50, outflow.getAmount().intValue());
+		assertEquals("bills", Inflow.getTitle().get().toString());
+		assertTrue(currTime.equals(Inflow.getDate().getValue()));
+		assertEquals(50, Inflow.getAmount().intValue());
 		
 	}
 	
@@ -31,39 +34,35 @@ class TestConstructor {
 		LocalDateTime currTime = LocalDateTime.now();
 		
 		IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-				() -> new Outflow(-55, currTime, "bills", new Category("title", 0, 0)));
+				() -> new Inflow(-55, currTime, "bills"));
 		assertEquals("Amount must be greater than zero", exception.getMessage());
-		
+			
 	}
 	@Test
 	void testInvalidDate() {
 		
 		IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-				() -> new Outflow(-55, null, "bills", new Category("title", 0, 0)));
+				() -> new Inflow(-55, null, "bills"));
 		assertEquals("Amount must be greater than zero", exception.getMessage());
 		
 	}
 	@Test
 	void testInvalidTitle() {
-		
 		LocalDateTime currTime = LocalDateTime.now();
 		
 		IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-				() -> new Outflow(-55, currTime, null, new Category("title", 0, 0)));
+				() -> new Inflow(-55, currTime, null));
 		assertEquals("Amount must be greater than zero", exception.getMessage());
 		
 	}
 	@Test
 	void testInvalidTitleLength() {
-		
 		LocalDateTime currTime = LocalDateTime.now();
 		
 		IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-				() -> new Outflow(-55, currTime, "", new Category("title", 0, 0)));
+				() -> new Inflow(-55, currTime, ""));
 		assertEquals("Amount must be greater than zero", exception.getMessage());
 		
 	}
-
-
 
 }
