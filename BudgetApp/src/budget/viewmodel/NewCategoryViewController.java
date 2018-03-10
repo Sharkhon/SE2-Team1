@@ -33,10 +33,17 @@ public class NewCategoryViewController {
 	    
 	    @FXML
 	    public void CreateNewCategory(ActionEvent event) {
-	    		if (!this.categoryNameBox.textProperty().get().isEmpty()) {
-	    			this.overview.addNewCategory(this.categoryNameBox.textProperty().get());
-	    			this.CancelButton.getScene().getWindow().hide();
+	    		if(this.categoryNameBox.getText().isEmpty()) {
+	    			return;//TODO Show add title
 	    		}
+	    	
+	    		if (this.initalAllocatedAmount.getText().isEmpty()) {
+	    			this.overview.addNewCategory(this.categoryNameBox.getText());
+	    		} else {
+	    			this.overview.addNewCategory(this.categoryNameBox.getText(), Double.parseDouble(this.initalAllocatedAmount.getText()));
+	    		}
+	    		
+	    		this.CancelButton.getScene().getWindow().hide();
 	    }
 
 	    @FXML

@@ -25,9 +25,6 @@ import javafx.util.Callback;
 public class OverviewViewModel {
 
 	@FXML
-	private Button EditButton;
-
-	@FXML
 	private Label TotalAmountLabel;
 
 	@FXML
@@ -65,6 +62,9 @@ public class OverviewViewModel {
 	
 	@FXML
 	private TableColumn<Transaction, String> transactionCategory;
+	
+	@FXML
+	private Button DeleteItemButton;
 	
 	private OverView overview;
 	
@@ -158,19 +158,18 @@ public class OverviewViewModel {
 		
 		if(this.transactionView.isVisible())
 		{
-			System.out.println("other");
+			this.showNewTransactionView(new NewTransactionDialogController(this.overview));
 		}
 	}
 	
 	@FXML
-	public void editItem() {
-		if(this.categoryView.isVisible()) {
-			this.showEditCategoryView(new EditCategoryDialogController(this.overview, this.categoryView.selectionModelProperty().get().getSelectedItem()));
+	public void DeleteItem() {
+		if(this.categoryView.isVisible() && this.categoryView.getSelectionModel().getSelectedItem() != null) {
+			this.overview.RemoveCategory(this.categoryView.getSelectionModel().getSelectedItem());
 		}
 		
-		if(this.transactionView.isVisible())
-		{
-			System.out.println("other");
+		if(this.transactionView.isVisible() && this.transactionView.getSelectionModel().getSelectedItem() != null) {
+			this.overview.RemoveTransaction(this.transactionView.getSelectionModel().getSelectedItem());
 		}
 	}
 	
@@ -191,14 +190,14 @@ public class OverviewViewModel {
 		}
 	}
 	
-	private void showEditCategoryView(EditCategoryDialogController controller) {
+	private void showNewTransactionView(NewTransactionDialogController controller) {
 		try {
 			Stage primaryStage = new Stage();
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/EditCategoryDialog.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/NewTransactionDialog.fxml"));
 			loader.setController(controller);
 			Parent root = loader.load();
 			
-			Scene scene = new Scene(root, 450, 200);
+			Scene scene = new Scene(root, 450, 275);
 			primaryStage.setScene(scene);
 			primaryStage.initOwner(this.AddButton.getScene().getWindow());
 			primaryStage.initModality(Modality.APPLICATION_MODAL);

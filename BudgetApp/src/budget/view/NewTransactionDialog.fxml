@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane prefHeight="268.0" prefWidth="388.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+   <top>
+      <Label alignment="CENTER" contentDisplay="CENTER" text="New Transaction" textAlignment="CENTER" underline="true" BorderPane.alignment="CENTER">
+         <font>
+            <Font size="16.0" />
+         </font>
+         <BorderPane.margin>
+            <Insets bottom="20.0" />
+         </BorderPane.margin>
+      </Label>
+   </top>
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="41.0" prefWidth="341.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="CreateTransactionButton" mnemonicParsing="false" onAction="#createNewTransaction" text="Create">
+               <HBox.margin>
+                  <Insets right="20.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="CancelButton" mnemonicParsing="false" onAction="#cancelOperation" text="Cancel" />
+         </children>
+      </HBox>
+   </bottom>
+   <center>
+      <VBox prefHeight="101.0" prefWidth="163.0" BorderPane.alignment="CENTER">
+         <children>
+            <RadioButton fx:id="InflowRadioButton" mnemonicParsing="false" text="Inflow" />
+            <RadioButton fx:id="OutflowRadioButton" mnemonicParsing="false" onAction="#EnableCategoryComboBox" text="Outflow" />
+            <Label text="Categories:" />
+            <ComboBox fx:id="CategoriesComboBox" disable="true" prefWidth="150.0" />
+            <Label text="Recurrance" />
+            <RadioButton fx:id="RecurDaily" mnemonicParsing="false" text="Daily" />
+            <RadioButton fx:id="RecurWeekly" mnemonicParsing="false" text="Weekly" />
+            <RadioButton fx:id="RecurMonthly" mnemonicParsing="false" text="Monthly" />
+            <RadioButton fx:id="RecurYearly" mnemonicParsing="false" text="Yearly" />
+         </children>
+         <BorderPane.margin>
+            <Insets left="20.0" />
+         </BorderPane.margin>
+      </VBox>
+   </center>
+   <left>
+      <VBox prefHeight="89.0" prefWidth="205.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label text="Title:" />
+                  <TextField fx:id="TitleTextbox" prefHeight="27.0" prefWidth="171.0" />
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label text="Amount:" />
+                  <TextField fx:id="AmountTextBox" prefHeight="27.0" prefWidth="152.0" />
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label prefHeight="17.0" prefWidth="134.0" text="Date Occuured:" />
+                  <DatePicker fx:id="theDatePicker" prefHeight="27.0" prefWidth="146.0" />
+               </children>
+            </HBox>
+         </children>
+         <BorderPane.margin>
+            <Insets left="20.0" />
+         </BorderPane.margin>
+      </VBox>
+   </left>
+</BorderPane>

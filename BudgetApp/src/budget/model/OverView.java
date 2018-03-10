@@ -221,7 +221,28 @@ public class OverView {
 		this.transactions.add(new Outflow(amount, date, title, category));
 		
 		category.addToSpentAmount(amount);
+		this.overallBalance -= amount;
+		this.updateLabels();
+	}
+	
+	public void RemoveTransaction(Transaction toDelete) {
+		if(toDelete instanceof Outflow) {
+			this.overallBalance += toDelete.getAmount().get();
+			this.getSpecificCategory(((Outflow) toDelete).getCategoryName().get()).addToSpentAmount(-(toDelete.getAmount().get()));;
+		} else {
+			this.unallocatedBalance -= toDelete.getAmount().get();
+			this.overallBalance -= toDelete.getAmount().get();
+		}
 		
+		this.transactions.remove(toDelete);
+		this.updateLabels();
+	}
+	
+	public void RemoveCategory(Category toDelete) {
+		this.unallocatedBalance += toDelete.getAllocatedAmount().get() - toDelete.getSpentAmount().get();
+		
+		this.categories.remove(toDelete);
+		this.updateLabels();
 	}
 
 }

@@ -108,5 +108,10 @@ public class Category implements Comparable<Category> {
 	public boolean validEdit(String name, double newAllocatedAmount, double totalUnallocated) {
 		return !name.isEmpty() && totalUnallocated - (newAllocatedAmount - this.allocatedAmount.get()) >= 0;
 	}
+	
+	@Override
+	public String toString() {
+		return this.name.get();
+	}
 
 }
