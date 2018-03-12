@@ -39,18 +39,29 @@ class TestConstructor {
 	void testInvalidDate() {
 		
 		IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-				() -> new Outflow(-55, null, "bills", new Category("title", 0, 0)));
-		assertEquals("Amount must be greater than zero", exception.getMessage());
+				() -> new Outflow(55, null, "bills", new Category("title", 0, 0)));
+		assertEquals("Date cannot be null", exception.getMessage());
 		
 	}
 	@Test
-	void testInvalidTitle() {
+	void testNullTitle() {
 		
 		LocalDateTime currTime = LocalDateTime.now();
 		
 		IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-				() -> new Outflow(-55, currTime, null, new Category("title", 0, 0)));
-		assertEquals("Amount must be greater than zero", exception.getMessage());
+				() -> new Outflow(55, currTime, null, new Category("title", 0, 0)));
+		assertEquals("Invalid name", exception.getMessage());
+		
+	}
+	
+	@Test
+	void testEmptyTitle() {
+		
+		LocalDateTime currTime = LocalDateTime.now();
+		
+		IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+				() -> new Outflow(55, currTime, "", new Category("title", 0, 0)));
+		assertEquals("Invalid name", exception.getMessage());
 		
 	}
 	@Test

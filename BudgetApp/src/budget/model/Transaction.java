@@ -24,7 +24,7 @@ public abstract class Transaction implements Comparable<Transaction> {
 			throw new IllegalArgumentException("Date cannot be null");
 		}
 		
-		if (title == null || title.length() < 1) {
+		if (title == null || title.equals("")) {
 			throw new IllegalArgumentException("Invalid name");
 		}
 
@@ -45,6 +45,6 @@ public abstract class Transaction implements Comparable<Transaction> {
 		return this.title;
 	}
 	
-	abstract StringProperty getType();
+	public abstract StringProperty getType();
 
 }
