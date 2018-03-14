@@ -14,6 +14,8 @@ import budget.model.Category;
 import budget.model.Inflow;
 import budget.model.Outflow;
 import budget.model.Transaction;
+import javafx.beans.property.StringProperty;
+import javafx.beans.property.SimpleStringProperty;
 
 public class TestConstructor {
 
@@ -21,10 +23,13 @@ public class TestConstructor {
 	void testValidConstructor() {
 		LocalDateTime currTime = LocalDateTime.now();
 		Transaction Inflow = new Inflow(50, currTime, "bills");
+		StringProperty result = new SimpleStringProperty("Inflow");
+		
 
 		assertEquals("bills", Inflow.getTitle().get().toString());
 		assertTrue(currTime.equals(Inflow.getDate().getValue()));
 		assertEquals(50, Inflow.getAmount().intValue());
+		assertEquals(result.toString(), Inflow.getType().toString());
 
 	}
 
