@@ -20,6 +20,7 @@ class TestAddNewOutflow {
 		ovr.addNewOutflow(26, date, "Milk", cat);
 		
 		assertEquals(1,ovr.getTransactions().size());
+		assertEquals(-26, ovr.getOverallBalance());
 	}
 	
 	@Test
@@ -34,6 +35,7 @@ class TestAddNewOutflow {
 		ovr.addNewOutflow(36, date, "eggs", cat);
 		
 		assertEquals(4,ovr.getTransactions().size());
+		assertEquals(-93, ovr.getOverallBalance());
 	}
 
 }
