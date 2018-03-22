@@ -1,0 +1,26 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x0000000104d3c48a, pid=58474, tid=24327
+#
+# JRE version: Java(TM) SE Runtime Environment (9.0+11) (build 9.0.4+11)
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (9.0.4+11, mixed mode, tiered, compressed oops, g1 gc, bsd-amd64)
+# Problematic frame:
+# C  [libjimage.dylib+0x248a]  ImageFileReader::find_location_index(char const*, unsigned long long*) const+0x2c
+#
+# No core dump will be written. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.java.com/bugreport/crash.jsp
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: -agentlib:jdwp=transport=dt_socket,suspend=y,address=localhost:65522 -Dfile.encoding=UTF-8 budget.Driver
+
+Host: MacBookPro11,3 x86_64 2500 MHz, 8 cores, 16G, Darwin 17.4.0
+Time: Thu Mar 15 10:03:20 2018 EDT elapsed time: 24 seconds (0d 0h 0m 24s)
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00007f8cad80d800):  JavaThread "Signal Dispatcher" daemon [_thread_in_vm, id=24327, stack(0x000070000719d000,0x000070000729d000)]

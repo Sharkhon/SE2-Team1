@@ -19,15 +19,26 @@ public class LoadModalController {
 
     @FXML
     private TextField usernameBox;
+    
+    @FXML
+    private TextField invalidMessage;
+    
+    @FXML
+    private Button createUserButton;
 
     @FXML
     public void login(ActionEvent event) {
     		if(true) {//Checks Server for User and Password
     			this.showMainView();
     		} else {
-    			//Deny access
+    			this.invalidMessage.visibleProperty().set(true);
     		}
     	
+    }
+    
+    @FXML
+    public void create(ActionEvent event) {
+    		
     }
     
     private void showMainView() {
