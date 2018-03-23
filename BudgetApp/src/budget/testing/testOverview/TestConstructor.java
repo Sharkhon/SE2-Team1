@@ -16,6 +16,8 @@ class TestConstructor {
 		assertEquals(0, over.getCategories().size());
 		assertEquals(100, over.getOverallBalance());
 		assertEquals(100, over.getUnallocatedBalance());
+		assertEquals("100.0", over.getOverallBalanceProperty().get());
+		assertEquals("100.0", over.getUnallocatedBalanceProperty().get());
 	}
 	
 	@Test
