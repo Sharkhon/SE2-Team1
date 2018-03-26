@@ -1,76 +1,82 @@
 package budget.server;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Timer;
-import java.util.concurrent.TimeUnit;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.InetAddress;
+import java.net.Socket;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.UnknownHostException;
+
+import budget.Driver;
 
 public class ServerAccess {
 	
-	public static void testAccess() throws IOException, InterruptedException {
-		//Process p = Runtime.getRuntime().exec("python server/main.py");
-		
-		String[] cmd = new String[6];
-		
-		if(System.getProperty("os.name").toLowerCase().startsWith("mac")) {
-			cmd[0] = "/Library/Frameworks/Python.framework/Versions/3.6/bin/python3.6";
-		} else {
-			cmd[0] = "\"C:\\Program Files\\Python36\\python\"";
-		}
-		
-		cmd[1] = "server/client.py";
-		cmd[2] = "checkUser";
-		cmd[3] = "user";
-		cmd[4] = "pass";
-		cmd[5] = null;
-		
-		/*	have args: 
-		 * 		1: python file
-		 * 		2: client function
-		 * 		3: arg1 (username)
-		 * 		4: arg2 (password/budgetName)
-		 * 		5: arg3=null (filePath for writing)
-		 */
-		
-		Runtime rt = Runtime.getRuntime();
-		
-		double time = System.currentTimeMillis();
-		
-		Process p = rt.exec(cmd);
-		
-		p.waitFor();//60, TimeUnit.SECONDS);
-		
-		time = (System.currentTimeMillis() - time)/1000;
-		
-		System.out.println("Time taken: " + time);
-		
-		String s = null;
-		
-		BufferedReader stdInput = new BufferedReader(new 
-	            InputStreamReader(p.getInputStream()));
-	
-	       BufferedReader stdError = new BufferedReader(new 
-	            InputStreamReader(p.getErrorStream()));
-       
-       System.out.println("Here is the standard output of the command:\n");
-       while ((s = stdInput.readLine()) != null) {
-           System.out.println(s);
-       }
-       
-       // read any errors from the attempted command
-       System.out.println("Here is the standard error of the command (if any):\n");
-       while ((s = stdError.readLine()) != null) {
-           System.out.println(s);
-       }
-		
+	public static boolean loginUser(String username, String password) {
+		return Boolean.parseBoolean(serverRequest("login user," + username + password));
 	}
 	
-	public static boolean FindUser(String userName, String password) {
+	private static String serverRequest(String request) {//TODO: Acutal Exception Handling
+		try {
+			InetAddress address = InetAddress.getByName(Driver.SERVER_URL);
+			Socket socket = new Socket(address, Driver.PORT);
+			
+			OutputStream os = socket.getOutputStream();
+			OutputStreamWriter oswriter = new OutputStreamWriter(os);
+			BufferedWriter bwriter = new BufferedWriter(oswriter);
+			
+			bwriter.write("push,gamer,budget1,This is my test given to it\ncol1,col2,col3\n");
+			bwriter.flush();
+			
+			InputStream is = socket.getInputStream();
+	        InputStreamReader isr = new InputStreamReader(is);
+	        BufferedReader br = new BufferedReader(isr);
+	        
+	        StringBuilder response = new StringBuilder();
+	        String message;
+	        while((message = br.readLine()) != null) {
+	        		response.append(message);
+	        }
+        
+        		socket.close();
+        		return response.toString();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "Server Error";
+	}
+	
+	public static void secondTry() throws UnknownHostException, IOException {
+		InetAddress address = InetAddress.getByName(Driver.SERVER_URL);
+		Socket socket = new Socket(address, Driver.PORT);
 		
+		OutputStream os = socket.getOutputStream();
+		OutputStreamWriter oswriter = new OutputStreamWriter(os);
+		BufferedWriter bwriter = new BufferedWriter(oswriter);
 		
+		bwriter.write("push,gamer,budget1,This is my test given to it\ncol1,col2,col3\n");
+		bwriter.flush();
 		
-		return false;
+		InputStream is = socket.getInputStream();
+        InputStreamReader isr = new InputStreamReader(is);
+        BufferedReader br = new BufferedReader(isr);
+        
+        String message;
+        while((message = br.readLine()) != null) {
+        		System.out.println(message);
+        }
+        
+        socket.close();
 	}
 	
 	

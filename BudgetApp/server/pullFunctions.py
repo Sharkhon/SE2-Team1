@@ -1,0 +1,3 @@
+
+def pullFunctions(inputGiven):
+    pass

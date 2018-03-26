@@ -10,6 +10,10 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Driver extends Application {
+	
+	public static String SERVER_URL = "127.0.0.1";
+	public static int PORT = 6000;
+	
 	@Override
 	public void start(Stage primaryStage) {		
 		try {
@@ -23,7 +27,7 @@ public class Driver extends Application {
 	}
 	
 	public static void main(String[] args) throws IOException, InterruptedException {		
-		ServerAccess.testAccess();
+		ServerAccess.secondTry();
 		//launch(args);
 		System.exit(0);
 	}

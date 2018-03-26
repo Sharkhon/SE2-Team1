@@ -75,7 +75,7 @@ def server_thread(ctx):
                 raise
 
         identity, command, offset_str, chunksz_str, username, budgetName = msg
-
+        print(identity.decode("UTF-8"))
         #assert command == b"fetch"
         data = b""
         
