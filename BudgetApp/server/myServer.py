@@ -2,6 +2,7 @@ import socket, os
 from threading import Thread
 from userFunctions import userFunctions
 from pushFunctions import pushFunctions
+from pullFunctions import pullFunctions
 
 def client_thread(connection, ip, port):
     inputGivenInBytes = connection.recv(4096)
@@ -16,6 +17,8 @@ def client_thread(connection, ip, port):
         response = str(userFunctions(inputGiven))
     if('push' in inputGiven[0]):
         response = str(pushFunctions(inputGiven))
+    if('pull' in inputGiven[0]):
+        response = str(pullFunctions(inputGiven))
 
     print(response)
     connection.send(response.encode("utf-8"))

@@ -22,6 +22,14 @@ public class ServerAccess {
 		return Boolean.parseBoolean(serverRequest("login user," + username + password));
 	}
 	
+	public static boolean newUser(String username, String password) {
+		return Boolean.parseBoolean(serverRequest("new user," + username + password));
+	}
+	
+	public static boolean pushBudget(String username, String budgetname, String dataCSV) {
+		return Boolean.parseBoolean(serverRequest("push,"+ username + "," + budgetname + "," + dataCSV));
+	}
+	
 	private static String serverRequest(String request) {//TODO: Acutal Exception Handling
 		try {
 			InetAddress address = InetAddress.getByName(Driver.SERVER_URL);
@@ -31,7 +39,7 @@ public class ServerAccess {
 			OutputStreamWriter oswriter = new OutputStreamWriter(os);
 			BufferedWriter bwriter = new BufferedWriter(oswriter);
 			
-			bwriter.write("push,gamer,budget1,This is my test given to it\ncol1,col2,col3\n");
+			bwriter.write(request);
 			bwriter.flush();
 			
 			InputStream is = socket.getInputStream();
@@ -54,29 +62,6 @@ public class ServerAccess {
 			e.printStackTrace();
 		}
 		return "Server Error";
-	}
-	
-	public static void secondTry() throws UnknownHostException, IOException {
-		InetAddress address = InetAddress.getByName(Driver.SERVER_URL);
-		Socket socket = new Socket(address, Driver.PORT);
-		
-		OutputStream os = socket.getOutputStream();
-		OutputStreamWriter oswriter = new OutputStreamWriter(os);
-		BufferedWriter bwriter = new BufferedWriter(oswriter);
-		
-		bwriter.write("push,gamer,budget1,This is my test given to it\ncol1,col2,col3\n");
-		bwriter.flush();
-		
-		InputStream is = socket.getInputStream();
-        InputStreamReader isr = new InputStreamReader(is);
-        BufferedReader br = new BufferedReader(isr);
-        
-        String message;
-        while((message = br.readLine()) != null) {
-        		System.out.println(message);
-        }
-        
-        socket.close();
 	}
 	
 	

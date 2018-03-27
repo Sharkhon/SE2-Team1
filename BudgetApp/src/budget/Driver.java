@@ -27,8 +27,6 @@ public class Driver extends Application {
 	}
 	
 	public static void main(String[] args) throws IOException, InterruptedException {		
-		ServerAccess.secondTry();
-		//launch(args);
-		System.exit(0);
+		launch(args);
 	}
 }
