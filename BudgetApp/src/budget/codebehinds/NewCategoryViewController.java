@@ -1,4 +1,4 @@
-package budget.viewmodel;
+package budget.codebehinds;
 
 import budget.model.OverView;
 import javafx.event.ActionEvent;
