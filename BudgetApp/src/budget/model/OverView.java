@@ -26,6 +26,7 @@ public class OverView {
 	private double unallocatedBalance;
 	private StringProperty unallocatedBalanceLabel;
 	
+	private StringProperty name;
 	
 
 	/**
@@ -38,6 +39,19 @@ public class OverView {
 	 */
 	public OverView() {		
 		this(0);
+	}
+	
+	public OverView(String name) {
+		this(name, 0);
+	}
+	
+	public OverView(String name, double overallBal) {
+		this(overallBal);
+		if(name == null || name.isEmpty() || name.contains(",")) {
+			throw new IllegalArgumentException("Invalid budget name");
+		}
+		
+		this.name.set(name);
 	}
 
 	/**
@@ -59,6 +73,7 @@ public class OverView {
 		this.unallocatedBalance = overallBalance;
 		this.unallocatedBalanceLabel = new SimpleStringProperty(Double.toString(this.unallocatedBalance));
 		this.overallBalanceLabel = new SimpleStringProperty(Double.toString(this.overallBalance));
+		this.name = new SimpleStringProperty("name");
 	}
 
 	/**
@@ -185,23 +200,54 @@ public class OverView {
 	 * Adds a new category by specified name
 	 * 
 	 * @precondition name != null AND name != ""
-	 * @postconditio none
+	 * @postcondition A new category named name is added to the 
+	 * 				list of categories
 	 * 
 	 * @param name
 	 *            name of the new category
 	 */
 	public void addNewCategory(String name) {
-
-		Category newCat = new Category(name, 0, 0);
-		this.categories.add(newCat);
+		this.addNewCategory(name, 0, 0);
 	}
 	
+	/**
+	 * Adds a new category by specified name
+	 * 
+	 * @precondition name != null AND name != ""
+	 * @postcondition A new category named name is with an allocated amount
+	 * 				of AllocatedAmount added to the 
+	 * 				list of categories
+	 * 
+	 * @param name
+	 *            name of the new category
+	 */
 	public void addNewCategory(String name, double AllocatedAmount) {
-
-		Category newCat = new Category(name, AllocatedAmount, 0);
+		this.addNewCategory(name, AllocatedAmount, 0);
+	}
+	
+	/**
+	 * Adds a new category by specified name
+	 * 
+	 * @precondition name != null AND name != ""
+	 * @postconditio none
+	 * 
+	 * @param name
+	 *            name of the new category
+	 */
+	public void addNewCategory(String name, double AllocatedAmount, double SpentAmount) {
+		Category newCat = new Category(name, AllocatedAmount, SpentAmount);
 		this.categories.add(newCat);
 		this.unallocatedBalance -= AllocatedAmount;
+		this.overallBalance -= SpentAmount;
 		this.updateLabels();
+	}
+	
+	public void addTransaction(String title, double amount, LocalDateTime date, boolean inOut, String categoryName) {
+		if(inOut) {
+			this.addNewInflow(amount, date, title);
+		} else {
+			this.addNewOutflow(amount, date, title, this.getSpecificCategory(categoryName));
+		}
 	}
 	
 	public void addNewInflow(double amount, LocalDateTime date, String title) {
@@ -243,6 +289,20 @@ public class OverView {
 		
 		this.categories.remove(toDelete);
 		this.updateLabels();
+	}
+	
+	/**
+	 * Updates the budget's name
+	 * 
+	 * @precondition The name cannot be null, empty, or contain commas
+	 * @postcondition The budget's name is changed
+	 * @param name The new name for the budget
+	 */
+	public void setName(String name) {
+		if(name == null || name.isEmpty() || name.contains(",")) {
+			throw new IllegalArgumentException("Invalid name");
+		}
+		this.name.set(name);
 	}
 
 }

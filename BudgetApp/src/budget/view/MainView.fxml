@@ -12,6 +12,7 @@
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
+                  <MenuItem fx:id="importBudgetMenuItem" mnemonicParsing="false" onAction="#ImportBudget" text="Import Budget" />
               <MenuItem mnemonicParsing="false" text="Close" />
             </items>
           </Menu>
@@ -28,13 +29,16 @@
         </menus>
       </MenuBar>
    </top>
-   <left>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
-   </left>
    <bottom>
       <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <VBox prefHeight="200.0" prefWidth="100.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="301.0">
+               <children>
+                  <Label text="Current Budget:" />
+                  <ComboBox fx:id="budgetSelector" onAction="#ChangeBudget" prefHeight="27.0" prefWidth="203.0" />
+               </children>
+            </HBox>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
                   <Button fx:id="AddButton" mnemonicParsing="false" onAction="#addItem" text="Add Item" />
                   <Button fx:id="DeleteItemButton" mnemonicParsing="false" onAction="#DeleteItem" text="Delete Item">
@@ -47,18 +51,17 @@
                   <Insets />
                </opaqueInsets>
             </VBox>
-            <VBox prefHeight="200.0" prefWidth="100.0" />
             <VBox prefHeight="200.0" prefWidth="200.0">
                <children>
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <VBox prefHeight="200.0" prefWidth="100.0">
+                        <VBox alignment="CENTER_RIGHT" prefHeight="200.0" prefWidth="100.0">
                            <children>
                               <Label text="Total:" />
                               <Label text="Unallocated:" />
                            </children>
                         </VBox>
-                        <VBox prefHeight="200.0" prefWidth="100.0">
+                        <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0">
                            <children>
                               <Label fx:id="TotalAmountLabel" text="\@TotalAmount" />
                               <Label fx:id="UnallocatedAmountLabel" text="\@UnallcoatedAmount" />

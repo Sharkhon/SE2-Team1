@@ -2,7 +2,6 @@ package budget;
 
 import java.io.IOException;
 
-import budget.server.ServerAccess;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -26,7 +25,7 @@ public class Driver extends Application {
 		}
 	}
 	
-	public static void main(String[] args) throws IOException, InterruptedException {		
+	public static void main(String[] args) throws IOException, InterruptedException {
 		launch(args);
 	}
 }
