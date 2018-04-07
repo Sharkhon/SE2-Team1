@@ -1,4 +1,4 @@
-package budget.viewmodel;
+package budget.codebehinds;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

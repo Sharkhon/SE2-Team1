@@ -1,9 +1,7 @@
-package budget.viewmodel;
+package budget.codebehinds;
 
-import java.io.FileNotFoundException;
 import java.time.LocalDateTime;
 
-import budget.io.ImportLocalFile;
 import budget.model.Category;
 import budget.model.Inflow;
 import budget.model.Outflow;
@@ -11,23 +9,17 @@ import budget.model.OverView;
 import budget.model.Transaction;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
-import javafx.scene.control.TableView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.scene.control.TableView;
 import javafx.util.Callback;
 
 public class OverviewViewModel {
@@ -73,12 +65,6 @@ public class OverviewViewModel {
 	
 	@FXML
 	private Button DeleteItemButton;
-	
-	@FXML
-	private MenuItem importBudgetMenuItem;
-	
-	@FXML
-	private ComboBox<OverView> budgets;
 	
 	private OverView overview;
 	
@@ -165,21 +151,6 @@ public class OverviewViewModel {
 	}
 	
 	@FXML
-    void ImportBudget(ActionEvent event) {
-		ImportLocalFile importer = new ImportLocalFile();
-		try {
-			OverView newBudget = importer.importLocalFileFromPicker();
-		} catch (FileNotFoundException e) {
-			this.showErrorDialog(e.getMessage());
-		}
-    }
-	
-	@FXML
-    public void ChangeBudget(ActionEvent event) {
-		System.out.println("Event fired");
-    }
-	
-	@FXML
 	public void addItem() {
 		if(this.categoryView.isVisible()) {
 			this.showAddCategoryView(new NewCategoryViewController(this.overview));
@@ -236,8 +207,4 @@ public class OverviewViewModel {
 		}
 	}
 
-	private void showErrorDialog(String message) {
-		Alert alert = new Alert(AlertType.ERROR, message, ButtonType.OK);
-		alert.showAndWait();
-	}
 }
