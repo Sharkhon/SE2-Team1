@@ -27,17 +27,17 @@ public class OverView {
 	private DoubleProperty overallBalanceLabel;
 	private DoubleProperty unallocatedBalanceLabel;
 	private StringProperty name;
-	
+
 	private ObservableList<Budget> budgets;
-	
+
 	private Budget currentBudget;
-	
+
 	private String currentUser;
 
 	/**
 	 * Constructor
 	 * 
-	 * @precondition none 
+	 * @precondition none
 	 * @postcondition none
 	 * 
 	 * @param overallBalanace
@@ -48,42 +48,42 @@ public class OverView {
 		this.unallocatedBalanceLabel = new SimpleDoubleProperty();
 		this.overallBalanceLabel = new SimpleDoubleProperty();
 		this.name = new SimpleStringProperty();
-		
+
 		this.currentUser = username;
-		
-		if(this.budgets.size() > 0) {
+
+		if (this.budgets.size() > 0) {
 			this.currentBudget = this.budgets.get(0);
 		}
 	}
-	
+
 	private void loadUser() {
-		
+
 	}
-	
+
 	/**
-	 * Sets the currently viewed budget to 
-	 * the budget at index in the budgets list
+	 * Sets the currently viewed budget to the budget at index in the budgets list
 	 * 
 	 * @precondition index >= 0 and index < budgets.size()
-	 * @postcondition the current budget is the budget at index
-	 * 				and the bound properties are updated
+	 * @postcondition the current budget is the budget at index and the bound
+	 *                properties are updated
 	 * 
-	 * @param index The index of the budget
+	 * @param index
+	 *            The index of the budget
 	 */
 	public void setCurrentBudget(int index) {
-		if(index < 0 || index >= this.budgets.size()) {
+		if (index < 0 || index >= this.budgets.size()) {
 			throw new IllegalArgumentException("index given is out of bounds to update the current budget");
 		}
-		
+
 		this.currentBudget = this.budgets.get(index);
 		this.name.set(this.currentBudget.getName());
-		
+
 		this.currentCategories.clear();
 		this.currentCategories.addAll(this.currentBudget.getCategories());
-		
+
 		this.currentTransactions.clear();
 		this.currentTransactions.addAll(this.currentBudget.getTransactions());
-		
+
 		this.unallocatedBalanceLabel.bind(this.currentBudget.getUnallocatedAmount());
 	}
 
@@ -98,7 +98,7 @@ public class OverView {
 	public ObservableList<Category> getCategories() {
 		return this.currentCategories;
 	}
-	
+
 	/**
 	 * Get the list of transactions
 	 * 
@@ -110,7 +110,7 @@ public class OverView {
 	public ObservableList<Transaction> getTransactions() {
 		return this.currentTransactions;
 	}
-	
+
 	/**
 	 * Gets the budgets for the overview
 	 * 
@@ -120,7 +120,7 @@ public class OverView {
 	public ObservableList<Budget> getBudgets() {
 		return this.budgets;
 	}
-	
+
 	/**
 	 * Gets the overallBalance property
 	 * 
@@ -158,11 +158,11 @@ public class OverView {
 	public Category getSpecificCategory(String name) {
 		return this.currentBudget.getCategoryByName(name);
 	}
-	
+
 	public void updateCategoryAmounts(String selectedCategoryName, double newAmount) {
 		this.currentBudget.updateCategoryAllocatedAmount(selectedCategoryName, newAmount);
 	}
-	
+
 	/**
 	 * Adds a new category by specified name
 	 * 
@@ -176,30 +176,35 @@ public class OverView {
 		Category newCat = new Category(name, AllocatedAmount, SpentAmount);
 		this.currentBudget.addCategory(newCat);
 	}
-	
+
 	public void addNewInflow(double amount, LocalDateTime date, String title) {
 		Inflow inflow = new Inflow(amount, date, title);
 		this.currentBudget.addInflow(inflow);
 	}
-	
+
 	public void addNewOutflow(double amount, LocalDateTime date, String title, Category category) {
 		this.currentBudget.addOutflow(new Outflow(amount, date, title, category), category.getName().get());
 	}
-	
+
 	public void RemoveTransaction(Transaction toDelete) {
 		this.currentBudget.removeTransaction(toDelete);
 	}
-	
+
 	public void RemoveCategory(Category toDelete) {
 		this.currentBudget.removeCategory(toDelete);
 	}
-	
+
+	public void addBudget(Budget budget) {
+		this.budgets.add(budget);
+	}
+
 	/**
 	 * Updates the budget's name
 	 * 
 	 * @precondition The name cannot be null, empty, or contain commas
 	 * @postcondition The budget's name is changed
-	 * @param name The new name for the budget
+	 * @param name
+	 *            The new name for the budget
 	 */
 	public void setName(String name) {
 		this.currentBudget.setName(name);
