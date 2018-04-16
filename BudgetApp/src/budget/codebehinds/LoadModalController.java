@@ -1,12 +1,13 @@
 package budget.codebehinds;
 
+import budget.server.ServerAccess;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class LoadModalController {
@@ -21,24 +22,37 @@ public class LoadModalController {
     private TextField usernameBox;
     
     @FXML
-    private TextField invalidMessage;
+    private Text invalidMessage;
     
     @FXML
     private Button createUserButton;
 
     @FXML
+    public void initalize() {
+    }
+    
+    @FXML
     public void login(ActionEvent event) {
-    		if(true) {//Checks Server for User and Password
+    		if(ServerAccess.loginUser(this.usernameBox.getText(), this.passwordBox.getText())) {//Checks Server for User and Password
     			this.showMainView();
     		} else {
-    			this.invalidMessage.visibleProperty().set(true);
+    			this.showErrorMessage("Could not find user " + this.usernameBox.getText());
     		}
     	
     }
     
+    private void showErrorMessage(String message) {
+    		this.invalidMessage.setText(message);
+    		this.invalidMessage.visibleProperty().set(true);
+    }
+    
     @FXML
     public void create(ActionEvent event) {
-    		
+    		if(ServerAccess.newUser(this.usernameBox.getText(), this.passwordBox.getText())) {
+    			this.showErrorMessage("User created, now login");
+    		} else {
+    			this.showErrorMessage("Could not create user " + this.usernameBox.getText());
+    		}
     }
     
     private void showMainView() {

@@ -87,8 +87,8 @@ public class OverviewViewModel {
 		this.showOverview();
 		this.showTransactions();
 		
-		this.TotalAmountLabel.textProperty().bind(this.overview.getOverallBalanceProperty());
-		this.UnallocatedAmountLabel.textProperty().bind(this.overview.getUnallocatedBalanceProperty());
+		//this.TotalAmountLabel.textProperty().bind(this.overview.getOverallBalanceProperty());
+		//this.UnallocatedAmountLabel.textProperty().bind(this.overview.getUnallocatedBalanceProperty());
 	}
 	
 	private void showOverview() {

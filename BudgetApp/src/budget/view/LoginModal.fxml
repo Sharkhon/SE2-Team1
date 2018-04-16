@@ -16,7 +16,7 @@
             <Button fx:id="loginButton" layoutX="131.0" layoutY="150.0" mnemonicParsing="false" onAction="#login" text="Login" />
             <Text layoutX="52.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username:" />
             <Text layoutX="53.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password:" />
-            <Text fx:id="invlaidMessage" fill="RED" layoutX="175.0" layoutY="146.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Invalid Login" visible="false" />
+            <Text fx:id="invalidMessage" fill="RED" layoutX="53.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Invalid Login" textAlignment="CENTER" visible="false" wrappingWidth="247.18115234375" />
             <Button fx:id="createUserButton" layoutX="226.0" layoutY="150.0" mnemonicParsing="false" onAction="#create" text="Create" />
          </children>
       </Pane>

@@ -19,15 +19,15 @@ def newUser(userName, password):
 def checkLogin(userName, password):
     with open(os.path.join(os.getcwd(), "data", "users.txt"), 'r') as f:
         for line in f.readlines():
-            splitstr = line.split(",")
+            splitstr = line.strip().split(",")
             if(splitstr[0] == userName and splitstr[1] == password):
-                return False
-    return True
+                return True
+    return False
 
 def userExsists(userName):
     with open(os.path.join(os.getcwd(), "data", "users.txt"), 'r') as f:
         for line in f.readlines():
-            splitstr = line.split(",")
+            splitstr = line.strip().split(",")
             if(splitstr[0] == userName):
                 return True
     return False

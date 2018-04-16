@@ -19,11 +19,11 @@ import budget.Driver;
 public class ServerAccess {
 	
 	public static boolean loginUser(String username, String password) {
-		return Boolean.parseBoolean(serverRequest("login user," + username + password));
+		return Boolean.parseBoolean(serverRequest("login user," + username +"," + password));
 	}
 	
 	public static boolean newUser(String username, String password) {
-		return Boolean.parseBoolean(serverRequest("new user," + username + password));
+		return Boolean.parseBoolean(serverRequest("new user," + username + "," + password));
 	}
 	
 	public static boolean pushBudget(String username, String budgetname, String dataCSV) {
