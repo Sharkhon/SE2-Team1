@@ -114,6 +114,10 @@ public class Budget {
 		this.getCategoryByName(category).setAllocatedAmount(newAmount);
 	}
 	
+	public ArrayList<Transaction> getTransactions() {
+		return this.transactions;
+	}
+	
 	public void addInflow(Transaction inflow) {
 		if(inflow == null) {
 			throw new IllegalArgumentException("Cannot add null transaction.");
@@ -131,6 +135,31 @@ public class Budget {
 		this.overallAmount -= outflow.getAmount().get();
 		this.getCategoryByName(categoryName).addToSpentAmount(outflow.getAmount().get());
 		
+	}
+	
+	public void removeTransaction(Transaction toDelete) {
+		if(toDelete instanceof Outflow) {
+			this.overallAmount += toDelete.getAmount().get();
+			this.getCategoryByName(((Outflow) toDelete).getCategoryName().get()).addToSpentAmount(-(toDelete.getAmount().get()));;
+		} else {
+			this.unallocatedAmount -= toDelete.getAmount().get();
+			this.overallAmount -= toDelete.getAmount().get();
+		}
+			
+		this.transactions.remove(toDelete);
+	}
+	
+	public void removeCategory(Category toDelete) {
+		this.unallocatedAmount += toDelete.getAllocatedAmount().get() - toDelete.getSpentAmount().get();
+		this.categories.remove(toDelete);
+	}
+	
+	public double getUnallocatedAmount() {
+		return this.unallocatedAmount;
+	}
+	
+	public double getOverallAmount() {
+		return this.overallAmount;
 	}
 	
 	/*
