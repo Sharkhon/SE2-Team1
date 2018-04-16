@@ -51,10 +51,10 @@ public class NewCategoryViewController {
 
 	private void handleAddNewCategory() {
 		if (this.initalAllocatedAmount.getText().isEmpty()) {
-			this.overview.addNewCategory(this.categoryNameBox.getText());
+			this.overview.addNewCategory(this.categoryNameBox.getText(), 0, 0);
 		} else {
 			this.overview.addNewCategory(this.categoryNameBox.getText(),
-					Double.parseDouble(this.initalAllocatedAmount.getText()));
+					Double.parseDouble(this.initalAllocatedAmount.getText()), 0);
 		}
 	}
 }
