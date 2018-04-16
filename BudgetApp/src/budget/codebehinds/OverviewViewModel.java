@@ -2,6 +2,7 @@ package budget.codebehinds;
 
 import java.time.LocalDateTime;
 
+import budget.model.Budget;
 import budget.model.Category;
 import budget.model.Inflow;
 import budget.model.Outflow;
@@ -14,12 +15,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.control.TableView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.scene.control.TableView;
 import javafx.util.Callback;
 
 public class OverviewViewModel {
@@ -66,13 +68,14 @@ public class OverviewViewModel {
 	@FXML
 	private Button DeleteItemButton;
 	
+	@FXML
+	private ComboBox<Budget> budgetSelector;
+	
 	private OverView overview;
 	
-	public OverviewViewModel() {
+	public OverviewViewModel(String username) {
 		this.categoryView = new TableView<Category>();	
-		this.overview = new OverView();
-		this.overview.addNewInflow(1000000, LocalDateTime.now(), "Place Holder");
-		this.overview.addNewCategory("name1", 10);
+		this.overview = new OverView(username);
 	}
 	
 	@FXML

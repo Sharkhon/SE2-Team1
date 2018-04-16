@@ -4,7 +4,10 @@
 package budget.model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -19,61 +22,69 @@ import javafx.collections.ObservableList;
  */
 public class OverView {
 
-	private ObservableList<Transaction> transactions;
-	private ObservableList<Category> categories;
-	private double overallBalance;
-	private StringProperty overallBalanceLabel;
-	private double unallocatedBalance;
-	private StringProperty unallocatedBalanceLabel;
-	
+	private ObservableList<Transaction> currentTransactions;
+	private ObservableList<Category> currentCategories;
+	private DoubleProperty overallBalanceLabel;
+	private DoubleProperty unallocatedBalanceLabel;
 	private StringProperty name;
 	
-
-	/**
-	 * Default Constructor
-	 * 
-	 * @precondition overallbalance >= 0
-	 * @postcondition none
-	 * 
-	 * @param overallBalanace
-	 */
-	public OverView() {		
-		this(0);
-	}
+	private ObservableList<Budget> budgets;
 	
-	public OverView(String name) {
-		this(name, 0);
-	}
+	private Budget currentBudget;
 	
-	public OverView(String name, double overallBal) {
-		this(overallBal);
-		if(name == null || name.isEmpty() || name.contains(",")) {
-			throw new IllegalArgumentException("Invalid budget name");
-		}
-		
-		this.name.set(name);
-	}
+	private String currentUser;
 
 	/**
 	 * Constructor
 	 * 
-	 * @precondition overallbalance >= 0
+	 * @precondition none 
 	 * @postcondition none
 	 * 
 	 * @param overallBalanace
 	 */
-	public OverView(double overallBalance) {
-		if (overallBalance < 0) {
-			throw new IllegalArgumentException("overall Balance must be initially positive");
+	public OverView(String username) {
+		this.currentCategories = FXCollections.observableArrayList();
+		this.currentTransactions = FXCollections.observableArrayList();
+		this.unallocatedBalanceLabel = new SimpleDoubleProperty();
+		this.overallBalanceLabel = new SimpleDoubleProperty();
+		this.name = new SimpleStringProperty();
+		
+		this.currentUser = username;
+		
+		if(this.budgets.size() > 0) {
+			this.currentBudget = this.budgets.get(0);
 		}
-
-		this.categories = FXCollections.observableArrayList();
-		this.transactions = FXCollections.observableArrayList();
-		this.overallBalance = overallBalance;
-		this.unallocatedBalance = overallBalance;
-		this.unallocatedBalanceLabel = new SimpleStringProperty(Double.toString(this.unallocatedBalance));
-		this.overallBalanceLabel = new SimpleStringProperty(Double.toString(this.overallBalance));
-		this.name = new SimpleStringProperty("name");
+	}
+	
+	private void loadUser() {
+		
+	}
+	
+	/**
+	 * Sets the currently viewed budget to 
+	 * the budget at index in the budgets list
+	 * 
+	 * @precondition index >= 0 and index < budgets.size()
+	 * @postcondition the current budget is the budget at index
+	 * 				and the bound properties are updated
+	 * 
+	 * @param index The index of the budget
+	 */
+	public void setCurrentBudget(int index) {
+		if(index < 0 || index >= this.budgets.size()) {
+			throw new IllegalArgumentException("index given is out of bounds to update the current budget");
+		}
+		
+		this.currentBudget = this.budgets.get(index);
+		this.name.set(this.currentBudget.getName());
+		
+		this.currentCategories.clear();
+		this.currentCategories.addAll(this.currentBudget.getCategories());
+		
+		this.currentTransactions.clear();
+		this.currentTransactions.addAll(this.currentBudget.getTransactions());
+		
+		this.unallocatedBalanceLabel.bind(this.currentBudget.getUnallocatedAmount());
 	}
 
 	/**
@@ -85,7 +96,7 @@ public class OverView {
 	 * @return list of categories
 	 */
 	public ObservableList<Category> getCategories() {
-		return this.categories;
+		return this.currentCategories;
 	}
 	
 	/**
@@ -97,31 +108,17 @@ public class OverView {
 	 * @return the list of transactions
 	 */
 	public ObservableList<Transaction> getTransactions() {
-		return this.transactions;
+		return this.currentTransactions;
 	}
-
+	
 	/**
-	 * Gets the overallBalance
+	 * Gets the budgets for the overview
 	 * 
-	 * @precondition none
-	 * @postcondition none
-	 * 
-	 * @return overall balance
+	 * @precondition None
+	 * @return The list of budgets for the overview
 	 */
-	public double getOverallBalance() {
-		return this.overallBalance;
-	}
-
-	/**
-	 * Gets the unallocated balance
-	 * 
-	 * @precondition none
-	 * @postcondition none
-	 * 
-	 * @return unallocated balance
-	 */
-	public double getUnallocatedBalance() {
-		return this.unallocatedBalance;
+	public ObservableList<Budget> getBudgets() {
+		return this.budgets;
 	}
 	
 	/**
@@ -132,7 +129,7 @@ public class OverView {
 	 * 
 	 * @return overall balance
 	 */
-	public StringProperty getOverallBalanceProperty() {
+	public DoubleProperty getOverallBalanceProperty() {
 		return this.overallBalanceLabel;
 	}
 
@@ -144,14 +141,14 @@ public class OverView {
 	 * 
 	 * @return unallocated balance
 	 */
-	public StringProperty getUnallocatedBalanceProperty() {
+	public DoubleProperty getUnallocatedBalanceProperty() {
 		return this.unallocatedBalanceLabel;
 	}
 
 	/**
 	 * Gets the category specified by name and returns it, otherwise returns null
 	 * 
-	 * @precondition name != null
+	 * @precondition None
 	 * @postcondition none
 	 * 
 	 * @param name
@@ -159,136 +156,42 @@ public class OverView {
 	 * @return the category if
 	 */
 	public Category getSpecificCategory(String name) {
-		if (name == null) {
-			throw new IllegalArgumentException("name cannot be null");
-		}
-		Category category = null;
-		for (Category currCategory : this.categories) {
-			if (currCategory.getName().get().equalsIgnoreCase(name)) {
-				category = currCategory;
-			}
-		}
-		return category;
+		return this.currentBudget.getCategoryByName(name);
 	}
 	
-	public void editCategory(String oldName, String newName, double newAllocatedAmount) {
-		Category selected = this.getSpecificCategory(oldName);
-		
-		double oldAllocatedVal = selected.getAllocatedAmount().get();
-		
-		double netAllocatedChange = newAllocatedAmount - oldAllocatedVal;
-		
-		this.unallocatedBalance -= netAllocatedChange;
-		
-		selected.setAllocatedAmount(newAllocatedAmount);
-		selected.setName(newName);
-		
-		this.updateLabels();
-	}
-	
-	public void updateCategoryAmounts(Category selected, double allocatedAmount, double spentAmount) {
-		double oldAllocatedAmount = selected.getAllocatedAmount().get();
-		selected.setAllocatedAmount(allocatedAmount);
-		this.unallocatedBalance -= allocatedAmount - oldAllocatedAmount;
-		
-		selected.setSpentAmount(spentAmount);
-		
-		this.updateLabels();
-	}
-
-	/**
-	 * Adds a new category by specified name
-	 * 
-	 * @precondition name != null AND name != ""
-	 * @postcondition A new category named name is added to the 
-	 * 				list of categories
-	 * 
-	 * @param name
-	 *            name of the new category
-	 */
-	public void addNewCategory(String name) {
-		this.addNewCategory(name, 0, 0);
+	public void updateCategoryAmounts(String selectedCategoryName, double newAmount) {
+		this.currentBudget.updateCategoryAllocatedAmount(selectedCategoryName, newAmount);
 	}
 	
 	/**
 	 * Adds a new category by specified name
 	 * 
 	 * @precondition name != null AND name != ""
-	 * @postcondition A new category named name is with an allocated amount
-	 * 				of AllocatedAmount added to the 
-	 * 				list of categories
-	 * 
-	 * @param name
-	 *            name of the new category
-	 */
-	public void addNewCategory(String name, double AllocatedAmount) {
-		this.addNewCategory(name, AllocatedAmount, 0);
-	}
-	
-	/**
-	 * Adds a new category by specified name
-	 * 
-	 * @precondition name != null AND name != ""
-	 * @postconditio none
+	 * @postcondition none
 	 * 
 	 * @param name
 	 *            name of the new category
 	 */
 	public void addNewCategory(String name, double AllocatedAmount, double SpentAmount) {
 		Category newCat = new Category(name, AllocatedAmount, SpentAmount);
-		this.categories.add(newCat);
-		this.unallocatedBalance -= AllocatedAmount;
-		this.overallBalance -= SpentAmount;
-		this.updateLabels();
-	}
-	
-	public void addTransaction(String title, double amount, LocalDateTime date, boolean inOut, String categoryName) {
-		if(inOut) {
-			this.addNewInflow(amount, date, title);
-		} else {
-			this.addNewOutflow(amount, date, title, this.getSpecificCategory(categoryName));
-		}
+		this.currentBudget.addCategory(newCat);
 	}
 	
 	public void addNewInflow(double amount, LocalDateTime date, String title) {
-		this.transactions.add(new Inflow(amount, date, title));
-		this.unallocatedBalance += amount;
-		this.overallBalance += amount;
-		
-		this.updateLabels();
-	}
-	
-	private void updateLabels() {
-		this.unallocatedBalanceLabel.set(Double.toString(this.unallocatedBalance));
-		this.overallBalanceLabel.set(Double.toString(this.overallBalance));
+		Inflow inflow = new Inflow(amount, date, title);
+		this.currentBudget.addInflow(inflow);
 	}
 	
 	public void addNewOutflow(double amount, LocalDateTime date, String title, Category category) {
-		this.transactions.add(new Outflow(amount, date, title, category));
-		
-		category.addToSpentAmount(amount);
-		this.overallBalance -= amount;
-		this.updateLabels();
+		this.currentBudget.addOutflow(new Outflow(amount, date, title, category), category.getName().get());
 	}
 	
 	public void RemoveTransaction(Transaction toDelete) {
-		if(toDelete instanceof Outflow) {
-			this.overallBalance += toDelete.getAmount().get();
-			this.getSpecificCategory(((Outflow) toDelete).getCategoryName().get()).addToSpentAmount(-(toDelete.getAmount().get()));;
-		} else {
-			this.unallocatedBalance -= toDelete.getAmount().get();
-			this.overallBalance -= toDelete.getAmount().get();
-		}
-		
-		this.transactions.remove(toDelete);
-		this.updateLabels();
+		this.currentBudget.removeTransaction(toDelete);
 	}
 	
 	public void RemoveCategory(Category toDelete) {
-		this.unallocatedBalance += toDelete.getAllocatedAmount().get() - toDelete.getSpentAmount().get();
-		
-		this.categories.remove(toDelete);
-		this.updateLabels();
+		this.currentBudget.removeCategory(toDelete);
 	}
 	
 	/**
@@ -299,10 +202,7 @@ public class OverView {
 	 * @param name The new name for the budget
 	 */
 	public void setName(String name) {
-		if(name == null || name.isEmpty() || name.contains(",")) {
-			throw new IllegalArgumentException("Invalid name");
-		}
-		this.name.set(name);
+		this.currentBudget.setName(name);
 	}
 
 }
