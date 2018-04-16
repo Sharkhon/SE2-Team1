@@ -1,6 +1,8 @@
 package budget.model;
 
 import java.util.ArrayList;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 
 public class Budget {
 	private ArrayList<Category> categories;
@@ -8,8 +10,8 @@ public class Budget {
 	
 	private String name;
 	
-	private double overallAmount;
-	private double unallocatedAmount;
+	private DoubleProperty overallAmount;
+	private DoubleProperty unallocatedAmount;
 	
 	public Budget(String name) {
 		this(name, 0, 0);
@@ -21,8 +23,8 @@ public class Budget {
 		}
 		
 		this.name = name;
-		this.overallAmount = overallAmount;
-		this.unallocatedAmount = unallocatedAmount;
+		this.overallAmount = new SimpleDoubleProperty(overallAmount);
+		this.unallocatedAmount = new SimpleDoubleProperty(unallocatedAmount);
 		
 		this.categories = new ArrayList<Category>();
 		this.transactions = new ArrayList<Transaction>();
@@ -154,11 +156,11 @@ public class Budget {
 		this.categories.remove(toDelete);
 	}
 	
-	public double getUnallocatedAmount() {
+	public DoubleProperty getUnallocatedAmount() {
 		return this.unallocatedAmount;
 	}
 	
-	public double getOverallAmount() {
+	public DoubleProperty getOverallAmount() {
 		return this.overallAmount;
 	}
 	
