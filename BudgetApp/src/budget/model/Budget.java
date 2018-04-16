@@ -142,6 +142,7 @@ public class Budget {
 	public void removeTransaction(Transaction toDelete) {
 		if(toDelete instanceof Outflow) {
 			this.overallAmount.add(toDelete.getAmount().doubleValue()) ;
+			
 			this.getCategoryByName(((Outflow) toDelete).getCategoryName().get()).addToSpentAmount(-(toDelete.getAmount().get()));;
 		} else {
 			this.unallocatedAmount.add(toDelete.getAmount().doubleValue()) ;
