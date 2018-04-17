@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import budget.io.ImportServerData;
+import javafx.beans.binding.DoubleBinding;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -164,8 +165,18 @@ public class OverView {
 	}
 
 	public void updateCategoryAmounts(String selectedCategoryName, double newAmount) {
+//		System.out.println(unallocatedBalanceLabel.doubleValue());
 		this.currentBudget.updateCategoryAllocatedAmount(selectedCategoryName, newAmount);
+		
+		
+//		this.unallocatedBalanceLabel(this.unallocatedBalanceLabel.subtract(newAmount).doubleValue());
+//		System.out.println(unallocatedBalanceLabel.doubleValue());
+		
 	}
+	
+
+
+
 
 	/**
 	 * Adds a new category by specified name
@@ -179,6 +190,7 @@ public class OverView {
 	public void addNewCategory(String name, double AllocatedAmount, double SpentAmount) {
 		Category newCat = new Category(name, AllocatedAmount, SpentAmount);
 		this.currentBudget.addCategory(newCat);
+		this.currentCategories.add(newCat);
 	}
 
 	public void addNewInflow(double amount, LocalDateTime date, String title) {
