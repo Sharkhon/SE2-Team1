@@ -218,5 +218,9 @@ public class OverView {
 	public void setName(String name) {
 		this.currentBudget.setName(name);
 	}
+	
+	public Budget getCurrentBudget() {
+		return this.currentBudget;
+	}
 
 }

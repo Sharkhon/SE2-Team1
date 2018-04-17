@@ -160,6 +160,11 @@ public class Budget {
 		return this.overallAmount;
 	}
 	
+	@Override
+	public String toString() {
+		return this.name;
+	}
+	
 	/*
 	 * Methods needed:
 	 * Add category

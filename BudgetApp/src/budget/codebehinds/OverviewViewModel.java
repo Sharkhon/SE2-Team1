@@ -106,6 +106,9 @@ public class OverviewViewModel {
 		
 		Bindings.bindBidirectional(this.TotalAmountLabel.textProperty(), this.overview.getOverallBalanceProperty(), this.numberConverter);
 		Bindings.bindBidirectional(this.UnallocatedAmountLabel.textProperty(), this.overview.getUnallocatedBalanceProperty(), this.numberConverter);
+		
+		this.budgetSelector.setItems(this.overview.getBudgets());
+		this.budgetSelector.selectionModelProperty().get().select(this.overview.getCurrentBudget());
 	}
 	
 	private void showOverview() {

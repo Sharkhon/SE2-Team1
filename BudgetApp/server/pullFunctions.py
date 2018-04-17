@@ -19,6 +19,6 @@ def pullAllFiles(username):
     fileList = os.listdir(os.path.join(os.getcwd(), "data", username))
     print(fileList)
     for file in fileList:
-        filelistStr += os.path.splitext(file)[0]
+        filelistStr += os.path.splitext(file)[0] + ','
     print(filelistStr)
-    return filelistStr
+    return filelistStr[:-1]
