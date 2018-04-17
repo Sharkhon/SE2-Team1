@@ -6,6 +6,7 @@ package budget.model;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+import budget.io.ImportServerData;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -45,19 +46,27 @@ public class OverView {
 	public OverView(String username) {
 		this.currentCategories = FXCollections.observableArrayList();
 		this.currentTransactions = FXCollections.observableArrayList();
+		this.budgets = FXCollections.observableArrayList();
 		this.unallocatedBalanceLabel = new SimpleDoubleProperty();
 		this.overallBalanceLabel = new SimpleDoubleProperty();
 		this.name = new SimpleStringProperty();
 
 		this.currentUser = username;
 
+		this.loadUser();
+		
 		if (this.budgets.size() > 0) {
 			this.currentBudget = this.budgets.get(0);
 		}
 	}
 
 	private void loadUser() {
-
+		ImportServerData serverImporter = new ImportServerData();
+		this.budgets.addAll(serverImporter.pullFromServer(this.currentUser));
+	}
+	
+	private void setupBudgetView() {
+		//TODO THIS IS WHERE THE BINDING IS DONE
 	}
 
 	/**
