@@ -3,10 +3,7 @@ package budget.codebehinds;
 import java.time.LocalDateTime;
 
 import budget.model.Category;
-import budget.model.Inflow;
-import budget.model.Outflow;
 import budget.model.OverView;
-import budget.model.Transaction;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -120,7 +117,7 @@ public class NewTransactionDialogController implements ChangeListener<Toggle> {
     			if(this.group.getSelectedToggle().equals(this.InflowRadioButton)) {
         			this.overview.addNewInflow(amount, date, title);
         		} else {
-        			Category category = this.CategoriesComboBox.getValue();
+        			String category = this.CategoriesComboBox.getValue().getName().get();
         			this.overview.addNewOutflow(amount, date, title, category);
         		}
     			
