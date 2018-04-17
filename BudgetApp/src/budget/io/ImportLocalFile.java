@@ -22,7 +22,7 @@ public class ImportLocalFile {
 	private Scanner scan;
 	/*
 	 * File will go like this:
-	 * 1. username,budgetname,overallBal
+	 * 1. username,budgetname,overallBal,unallocatedBal
 	 * **Categories**
 	 * 2. category,allocatedAmount,spentAmount
 	 * **Transactions**
