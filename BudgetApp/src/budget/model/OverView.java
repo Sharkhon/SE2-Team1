@@ -174,7 +174,7 @@ public class OverView {
 			throw new IllegalArgumentException("name cannot be null");
 		}
 		if(name.isEmpty()) {
-			throw new IllegalArgumentException("Must Provide a Name");
+			throw new IllegalArgumentException("Must Provide a Name"); 
 		}
 		return this.currentBudget.getCategoryByName(name);
 	}

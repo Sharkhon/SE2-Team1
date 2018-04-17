@@ -4,29 +4,24 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-
+import budget.model.Budget;
 import budget.model.OverView;
 
 class TestConstructor {
 
 	@Test
 	void testValidConstructor() {
-		OverView over = new OverView(100);
+		OverView over = new OverView("rachetl");
+		Budget budget =  new Budget("groceries", 200, 100);
+		over.addBudget(budget);
+		over.setCurrentBudget(0);
 		
 		assertEquals(0, over.getCategories().size());
-		assertEquals(100, over.getOverallBalance());
-		assertEquals(100, over.getUnallocatedBalance());
-		assertEquals("100.0", over.getOverallBalanceProperty().get());
-		assertEquals("100.0", over.getUnallocatedBalanceProperty().get());
-	}
-	
-	@Test
-	void testNegativeStartingBalance() {
-		
-		IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-				() -> new OverView(-1));
-		assertEquals("overall Balance must be initially positive", exception.getMessage());
+		assertEquals(200.0, over.getOverallBalanceProperty().doubleValue());
+		assertEquals(100.0, over.getUnallocatedBalanceProperty().doubleValue());
 
 	}
+	
+
 
 }

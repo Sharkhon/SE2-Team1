@@ -3,68 +3,88 @@ package budget.testing.testOverview;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
+import budget.model.Budget;
 import budget.model.OverView;
 
 class TestGetSpecificCategory {
+	private OverView overview;
+	private Budget budget;
+
+	@Before
+	public void setup() {
+		overview = new OverView("rachetl");
+		budget = new Budget("groceries", 200, 100);
+		overview.addBudget(budget);
+		overview.setCurrentBudget(0);
+
+		overview.addNewCategory("Groceries", 50, 0);
+		overview.addNewCategory("Category1", 50, 0);
+		overview.addNewCategory("car", 100, 0);
+
+	}
 
 	@Test
 	void testNullNameCategory() {
-
-		OverView ovr = new OverView(100);
+		setup();
 
 		IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-				() -> ovr.getSpecificCategory(null));
+				() -> overview.getSpecificCategory(null));
 		assertEquals("name cannot be null", exception.getMessage());
 	}
 
 	@Test
-	void testOneValidCategory() {
-		OverView ovr = new OverView(100);
+	void testEmptyNameCategory() {
+		setup();
 
-		ovr.addNewCategory("groceries");
-
-		assertEquals(ovr.getCategories().get(0), ovr.getSpecificCategory("Groceries"));
+		IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+				() -> overview.getSpecificCategory(""));
+		assertEquals("Must Provide a Name", exception.getMessage());
 	}
-	
+
+	@Test
+	void testOneValidCategory() {
+		setup();
+
+		assertEquals(overview.getCategories().get(0), overview.getSpecificCategory("Groceries"));
+	}
+
 	@Test
 	void testWantedCategoryIsFirst() {
-		OverView ovr = new OverView(100);
+		setup();
 
-		ovr.addNewCategory("groceries");
-		ovr.addNewCategory("bills");
-		ovr.addNewCategory("car");
-		
-
-		assertEquals(ovr.getCategories().get(0), ovr.getSpecificCategory("Groceries"));
+		assertEquals(overview.getCategories().get(0), overview.getSpecificCategory("Groceries"));
 	}
-	
+
 	@Test
 	void testWantedCategoryIsLast() {
-		OverView ovr = new OverView(100);
+		overview = new OverView("rachetl");
+		budget = new Budget("groceries", 200, 100);
+		overview.addBudget(budget);
+		overview.setCurrentBudget(0);
 
-		ovr.addNewCategory("bills");
-		ovr.addNewCategory("car");
-		ovr.addNewCategory("groceries");
-		
+		overview.addNewCategory("Category1", 50, 0);
+		overview.addNewCategory("car", 100, 0);
+		overview.addNewCategory("Groceries", 50, 0);
 
-		assertEquals(ovr.getCategories().get(2), ovr.getSpecificCategory("Groceries"));
+		assertEquals(overview.getCategories().get(2), overview.getSpecificCategory("Groceries"));
 	}
-	
+
 	@Test
 	void testWantedCategoryIsMiddle() {
-		OverView ovr = new OverView(100);
-		
-		ovr.addNewCategory("groceries");
+		overview = new OverView("rachetl");
+		budget = new Budget("groceries", 200, 100);
+		overview.addBudget(budget);
+		overview.setCurrentBudget(0);
 
-		ovr.addNewCategory("bills");
-		
-		ovr.addNewCategory("car");
-		
+		overview.addNewCategory("Category1", 50, 0);
+		overview.addNewCategory("Groceries", 50, 0);
+		overview.addNewCategory("car", 100, 0);
 		
 
-		assertEquals(ovr.getCategories().get(1), ovr.getSpecificCategory("Bills"));
+		assertEquals(overview.getCategories().get(1), overview.getSpecificCategory("Groceries"));
 	}
 
 }
