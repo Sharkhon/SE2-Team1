@@ -58,7 +58,7 @@ public class OverView {
 	public void loadUser() {
 		ImportServerData serverImporter = new ImportServerData();
 		this.budgets.addAll(serverImporter.pullFromServer(this.currentUser));
-		
+
 		if (this.budgets.size() > 0) {
 			this.setCurrentBudget(0);
 		}
@@ -147,6 +147,7 @@ public class OverView {
 	 * @return unallocated balance
 	 */
 	public DoubleProperty getUnallocatedBalanceProperty() {
+
 		return this.unallocatedBalanceLabel;
 	}
 
@@ -165,18 +166,13 @@ public class OverView {
 	}
 
 	public void updateCategoryAmounts(String selectedCategoryName, double newAmount) {
-//		System.out.println(unallocatedBalanceLabel.doubleValue());
+
 		this.currentBudget.updateCategoryAllocatedAmount(selectedCategoryName, newAmount);
-		
-		
-//		this.unallocatedBalanceLabel(this.unallocatedBalanceLabel.subtract(newAmount).doubleValue());
-//		System.out.println(unallocatedBalanceLabel.doubleValue());
-		
+		// TODO show Daniel
+		this.unallocatedBalanceLabel = new SimpleDoubleProperty(
+				this.unallocatedBalanceLabel.subtract(newAmount).doubleValue());
+
 	}
-	
-
-
-
 
 	/**
 	 * Adds a new category by specified name
@@ -227,7 +223,7 @@ public class OverView {
 	public void setName(String name) {
 		this.currentBudget.setName(name);
 	}
-	
+
 	public Budget getCurrentBudget() {
 		return this.currentBudget;
 	}
