@@ -1,2 +1,3 @@
 USERNAME,PASSWORD
 gamer,daniel
+rachetl,corey

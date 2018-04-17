@@ -54,6 +54,7 @@ public class OverView {
 		this.currentUser = username;
 
 		this.loadUser();
+
 		
 		if (this.budgets.size() > 0) {
 			this.currentBudget = this.budgets.get(0);
