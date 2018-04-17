@@ -66,7 +66,7 @@ public class OverView {
 	public void loadUser() {
 		ImportServerData serverImporter = new ImportServerData();
 		this.budgets.addAll(serverImporter.pullFromServer(this.currentUser));
-		
+
 		if (this.budgets.size() > 0) {
 			this.setCurrentBudget(0);
 		}
@@ -155,13 +155,14 @@ public class OverView {
 	 * @return unallocated balance
 	 */
 	public DoubleProperty getUnallocatedBalanceProperty() {
+
 		return this.unallocatedBalanceLabel;
 	}
 
 	/**
 	 * Gets the category specified by name and returns it, otherwise returns null
 	 * 
-	 * @precondition None
+	 * @precondition name != null & name != empty
 	 * @postcondition none
 	 * 
 	 * @param name
@@ -169,22 +170,23 @@ public class OverView {
 	 * @return the category if
 	 */
 	public Category getSpecificCategory(String name) {
+		if(name == null) {
+			throw new IllegalArgumentException("name cannot be null");
+		}
+		if(name.isEmpty()) {
+			throw new IllegalArgumentException("Must Provide a Name");
+		}
 		return this.currentBudget.getCategoryByName(name);
 	}
 
 	public void updateCategoryAmounts(String selectedCategoryName, double newAmount) {
-//		System.out.println(unallocatedBalanceLabel.doubleValue());
+
 		this.currentBudget.updateCategoryAllocatedAmount(selectedCategoryName, newAmount);
-		
-		
-//		this.unallocatedBalanceLabel(this.unallocatedBalanceLabel.subtract(newAmount).doubleValue());
-//		System.out.println(unallocatedBalanceLabel.doubleValue());
-		
+
+		this.unallocatedBalanceLabel = new SimpleDoubleProperty(
+				this.unallocatedBalanceLabel.subtract(newAmount).doubleValue());
+
 	}
-	
-
-
-
 
 	/**
 	 * Adds a new category by specified name
@@ -235,7 +237,7 @@ public class OverView {
 	public void setName(String name) {
 		this.currentBudget.setName(name);
 	}
-	
+
 	public Budget getCurrentBudget() {
 		return this.currentBudget;
 	}

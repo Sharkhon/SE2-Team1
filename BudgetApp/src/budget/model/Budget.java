@@ -13,6 +13,7 @@ public class Budget {
 	private DoubleProperty overallAmount;
 	private DoubleProperty unallocatedAmount;
 	
+	
 	public Budget(String name) {
 		this(name, 0, 0);
 	}
@@ -114,10 +115,9 @@ public class Budget {
 	 */
 	public void updateCategoryAllocatedAmount(String category, double newAmount) {
 		this.getCategoryByName(category).setAllocatedAmount(newAmount);
-		System.out.println(this.unallocatedAmount.doubleValue());
-		System.out.println();
+
 		this.unallocatedAmount = new SimpleDoubleProperty (this.unallocatedAmount.subtract(newAmount).doubleValue()); 
-		
+
 	}
 	
 	public ArrayList<Transaction> getTransactions() {
