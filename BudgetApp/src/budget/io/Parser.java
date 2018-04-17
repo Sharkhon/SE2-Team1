@@ -39,29 +39,40 @@ public class Parser {
 		return budgets;
 	}
 	
-	private Budget read(Scanner scan) {		
-		String[] topLine = scan.nextLine().split(",");
+	private Budget read(Scanner scan) {
+		StringBuilder fullString = new StringBuilder();
+		while(scan.hasNextLine()) {
+			fullString.append(scan.nextLine());
+		}
+		
+		scan.close();
+		
+		String[] lines = fullString.toString().split("~");
+		String[] topLine = lines[0].split(",");
 		//username,budgetname,overallBal,unallocatedBal
 		String budgetName = topLine[1];
 		Double overallBal = Double.parseDouble(topLine[2]);
 		Double unallocatedBal = Double.parseDouble(topLine[3]);
 		
-		ArrayList<String> lines = new ArrayList<String>();
-		String current = scan.nextLine();
-		while(!(current = scan.nextLine()).equals("**Transactions**")) {
-			lines.add(current);
+		ArrayList<String> seplines = new ArrayList<String>();
+		int lastIndex = 0;
+		for(int i = 2; i < lines.length; i++) {
+			if(lines[i].equals("**Transactions**")) {
+				lastIndex = i;
+				break;
+			}
+			
+			seplines.add(lines[i]);
 		}
 		
-		ArrayList<Category> categories = this.parseCategories(lines);
+		ArrayList<Category> categories = this.parseCategories(seplines);
 		
-		lines.clear();
-		current = scan.nextLine();
-		while(scan.hasNextLine()) {
-			lines.add(current);
+		seplines.clear();
+		for(int i = lastIndex+1; i < lines.length; i++) {
+			seplines.add(lines[i]);
 		}
-		scan.close();
 		
-		ArrayList<Transaction> transactions = this.parseTransactions(lines);
+		ArrayList<Transaction> transactions = this.parseTransactions(seplines);
 		
 		Budget newBudget = new Budget(budgetName, overallBal, unallocatedBal, categories, transactions);
 		return newBudget;

@@ -3,10 +3,8 @@ import os
 def pullFunctions(inputGiven):
     if('files' in inputGiven[0]):
         return pullAllFiles(inputGiven[1])
-    elif(len(inputGiven) == 3):
-        return pullBudget(inputGiven[1], inputGiven[2])
     else:
-        return pullAllData(inputGiven[1])
+        return pullBudget(inputGiven[1], inputGiven[2])
 
 def pullBudget(username, budgetname):
     data = ""
@@ -17,8 +15,10 @@ def pullBudget(username, budgetname):
     return data
 
 def pullAllFiles(username):
-    filelist = ""
+    filelistStr = ""
     fileList = os.listdir(os.path.join(os.getcwd(), "data", username))
-    for file in filelist:
-        filelist += os.path.splitext(file)
-    return filelist
+    print(fileList)
+    for file in fileList:
+        filelistStr += os.path.splitext(file)[0]
+    print(filelistStr)
+    return filelistStr

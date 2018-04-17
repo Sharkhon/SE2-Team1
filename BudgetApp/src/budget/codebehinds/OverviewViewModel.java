@@ -1,7 +1,9 @@
 package budget.codebehinds;
 
+import java.io.FileNotFoundException;
 import java.time.LocalDateTime;
 
+import budget.io.ImportLocalFile;
 import budget.model.Budget;
 import budget.model.Category;
 import budget.model.Inflow;
@@ -15,6 +17,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -22,6 +25,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -152,9 +156,6 @@ public class OverviewViewModel {
 			}
 			
 		});
-		
-		this.overview.addNewInflow(100, LocalDateTime.now(), "test 1");
-		this.overview.addNewOutflow(9.0, LocalDateTime.now(), "test 1", this.overview.getSpecificCategory("name1"));
 		this.transactionView.setItems(this.overview.getTransactions());
 	}
 	
@@ -183,6 +184,16 @@ public class OverviewViewModel {
 	
 	@FXML
     void ImportBudget(ActionEvent event) {
+		ImportLocalFile importer = new ImportLocalFile();
+		try {
+			this.overview.addBudget(importer.importLocalFileFromPicker());
+		} catch (FileNotFoundException e) {
+			new Alert(AlertType.ERROR).contentTextProperty().set(e.getMessage());
+		}
+    }
+	
+	@FXML
+    void ChangeBudget(ActionEvent event) {
 
     }
 	

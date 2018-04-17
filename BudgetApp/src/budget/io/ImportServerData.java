@@ -12,7 +12,9 @@ public class ImportServerData {
 		ArrayList<String> data = new ArrayList<String>();
 		
 		for(String name : fileNames) {
-			data.add(ServerAccess.pullBudget(username, name));
+			if(!name.isEmpty()) {
+				data.add(ServerAccess.pullBudget(username, name));
+			}
 		}
 		
 		Parser budgetParser = new Parser();

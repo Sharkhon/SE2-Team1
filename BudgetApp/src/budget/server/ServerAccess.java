@@ -32,7 +32,7 @@ public class ServerAccess {
 	}
 	
 	public static String pullBudget(String username, String budgetname) {
-		return serverRequest("pull" + username + "," + budgetname);
+		return serverRequest("pull," + username + "," + budgetname);
 	}
 	
 	private static String serverRequest(String request) {//TODO: Acutal Exception Handling
