@@ -114,6 +114,10 @@ public class Budget {
 	 */
 	public void updateCategoryAllocatedAmount(String category, double newAmount) {
 		this.getCategoryByName(category).setAllocatedAmount(newAmount);
+		System.out.println(this.unallocatedAmount.doubleValue());
+		System.out.println();
+		this.unallocatedAmount = new SimpleDoubleProperty (this.unallocatedAmount.subtract(newAmount).doubleValue()); 
+		
 	}
 	
 	public ArrayList<Transaction> getTransactions() {
@@ -164,6 +168,12 @@ public class Budget {
 	public String toString() {
 		return this.name;
 	}
+
+	public void setUnallocatedAmount(DoubleProperty unallocatedAmount) {
+		this.unallocatedAmount = unallocatedAmount;
+	}
+	
+	
 	
 	/*
 	 * Methods needed:
