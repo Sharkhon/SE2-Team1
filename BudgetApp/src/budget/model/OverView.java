@@ -162,7 +162,7 @@ public class OverView {
 	/**
 	 * Gets the category specified by name and returns it, otherwise returns null
 	 * 
-	 * @precondition None
+	 * @precondition name != null & name != empty
 	 * @postcondition none
 	 * 
 	 * @param name
@@ -170,13 +170,19 @@ public class OverView {
 	 * @return the category if
 	 */
 	public Category getSpecificCategory(String name) {
+		if(name == null) {
+			throw new IllegalArgumentException("name cannot be null");
+		}
+		if(name.isEmpty()) {
+			throw new IllegalArgumentException("Must Provide a Name");
+		}
 		return this.currentBudget.getCategoryByName(name);
 	}
 
 	public void updateCategoryAmounts(String selectedCategoryName, double newAmount) {
 
 		this.currentBudget.updateCategoryAllocatedAmount(selectedCategoryName, newAmount);
-		// TODO show Daniel
+
 		this.unallocatedBalanceLabel = new SimpleDoubleProperty(
 				this.unallocatedBalanceLabel.subtract(newAmount).doubleValue());
 

@@ -11,7 +11,7 @@ import budget.model.Category;
 import budget.model.OverView;
 
 class TestUpdateCategoryAmounts {
-	// TODO Corey finish this test Class
+
 	private OverView overview;
 	private Budget budget;
 
@@ -23,8 +23,7 @@ class TestUpdateCategoryAmounts {
 		overview.setCurrentBudget(0);
 
 		overview.addNewCategory("Category1", 50, 0);
-		// Category cat = new Category("wh", 20.0, 1.0);
-		// System.out.println(overview.getCategories());
+
 
 	}
 
