@@ -54,6 +54,14 @@ public class OverView {
 
 		this.currentUser = username;
 	}
+	
+	public OverView(String username, ArrayList<Budget> budgets) {
+		this(username);
+		this.budgets.addAll(budgets);
+		if(this.budgets.size() > 1) {
+			this.setCurrentBudget(0);
+		}
+	}
 
 	public void loadUser() {
 		ImportServerData serverImporter = new ImportServerData();
