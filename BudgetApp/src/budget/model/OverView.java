@@ -56,17 +56,13 @@ public class OverView {
 		this.loadUser();
 		
 		if (this.budgets.size() > 0) {
-			this.currentBudget = this.budgets.get(0);
+			this.setCurrentBudget(0);
 		}
 	}
 
 	private void loadUser() {
 		ImportServerData serverImporter = new ImportServerData();
 		this.budgets.addAll(serverImporter.pullFromServer(this.currentUser));
-	}
-	
-	private void setupBudgetView() {
-		//TODO THIS IS WHERE THE BINDING IS DONE
 	}
 
 	/**
@@ -94,6 +90,7 @@ public class OverView {
 		this.currentTransactions.addAll(this.currentBudget.getTransactions());
 
 		this.unallocatedBalanceLabel.bind(this.currentBudget.getUnallocatedAmount());
+		this.overallBalanceLabel.bind(this.currentBudget.getOverallAmount());
 	}
 
 	/**
@@ -196,11 +193,13 @@ public class OverView {
 	}
 
 	public void RemoveTransaction(Transaction toDelete) {
+		this.currentTransactions.remove(toDelete);
 		this.currentBudget.removeTransaction(toDelete);
 	}
 
 	public void RemoveCategory(Category toDelete) {
-		this.currentBudget.removeCategory(toDelete);
+		this.currentCategories.remove(toDelete);
+		this.currentBudget.deleteCategory(toDelete);
 	}
 
 	public void addBudget(Budget budget) {

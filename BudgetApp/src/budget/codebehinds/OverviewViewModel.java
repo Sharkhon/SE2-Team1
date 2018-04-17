@@ -1,6 +1,8 @@
 package budget.codebehinds;
 
 import java.io.FileNotFoundException;
+import java.text.Format;
+import java.text.NumberFormat;
 import java.time.LocalDateTime;
 
 import budget.io.ImportLocalFile;
@@ -10,6 +12,7 @@ import budget.model.Inflow;
 import budget.model.Outflow;
 import budget.model.OverView;
 import budget.model.Transaction;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -18,6 +21,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -25,10 +29,11 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
-import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import javafx.util.StringConverter;
+import javafx.util.converter.NumberStringConverter;
 
 public class OverviewViewModel {
 
@@ -82,9 +87,12 @@ public class OverviewViewModel {
 	
 	private OverView overview;
 	
+	private StringConverter<Number> numberConverter;
+	
 	public OverviewViewModel(String username) {
 		this.categoryView = new TableView<Category>();	
 		this.overview = new OverView(username);
+		this.numberConverter = new NumberStringConverter(NumberFormat.getCurrencyInstance());
 	}
 	
 	@FXML
@@ -96,8 +104,8 @@ public class OverviewViewModel {
 		this.showOverview();
 		this.showTransactions();
 		
-		//this.TotalAmountLabel.textProperty().bind(this.overview.getOverallBalanceProperty());
-		//this.UnallocatedAmountLabel.textProperty().bind(this.overview.getUnallocatedBalanceProperty());
+		Bindings.bindBidirectional(this.TotalAmountLabel.textProperty(), this.overview.getOverallBalanceProperty(), this.numberConverter);
+		Bindings.bindBidirectional(this.UnallocatedAmountLabel.textProperty(), this.overview.getUnallocatedBalanceProperty(), this.numberConverter);
 	}
 	
 	private void showOverview() {

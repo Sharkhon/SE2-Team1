@@ -80,7 +80,7 @@ public class Budget {
 	 * @postcondition Budget::getCategories.size() == @prev Budget::getCategories.size() - 1
 	 * @param category The category to remove from the budget
 	 */
-	public void deleteCaegory(Category category) {
+	public void deleteCategory(Category category) {
 		if(this.categories.remove(category)) {
 			this.unallocatedAmount.add(category.getAllocatedAmount().doubleValue() - category.getSpentAmount().doubleValue());
 		}
@@ -150,11 +150,6 @@ public class Budget {
 		}
 			
 		this.transactions.remove(toDelete);
-	}
-	
-	public void removeCategory(Category toDelete) {
-		this.unallocatedAmount.add(toDelete.getAllocatedAmount().doubleValue() - toDelete.getSpentAmount().doubleValue());
-		this.categories.remove(toDelete);
 	}
 	
 	public DoubleProperty getUnallocatedAmount() {
