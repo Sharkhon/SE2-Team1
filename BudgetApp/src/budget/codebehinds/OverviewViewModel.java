@@ -10,6 +10,7 @@ import budget.model.OverView;
 import budget.model.Transaction;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
@@ -70,6 +72,9 @@ public class OverviewViewModel {
 	
 	@FXML
 	private ComboBox<Budget> budgetSelector;
+	
+	@FXML
+    private MenuItem importBudgetMenuItem;
 	
 	private OverView overview;
 	
@@ -175,6 +180,11 @@ public class OverviewViewModel {
 			this.overview.RemoveTransaction(this.transactionView.getSelectionModel().getSelectedItem());
 		}
 	}
+	
+	@FXML
+    void ImportBudget(ActionEvent event) {
+
+    }
 	
 	private void showAddCategoryView(NewCategoryViewController controller) {
 		try {

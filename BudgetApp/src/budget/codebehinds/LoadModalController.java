@@ -58,7 +58,7 @@ public class LoadModalController {
     private void showMainView() {
 		try {
 			Stage primaryStage = new Stage();
-			FXMLLoader loader = FXMLLoader.load(getClass().getResource("../view/MainView.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/MainView.fxml"));
 			loader.setController(new OverviewViewModel(this.usernameBox.getText()));
 			Scene scene = new Scene(loader.load(), 700, 600);
 			primaryStage.setScene(scene);
