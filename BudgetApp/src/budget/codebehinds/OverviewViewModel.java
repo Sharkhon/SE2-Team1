@@ -1,7 +1,6 @@
 package budget.codebehinds;
 
 import java.io.FileNotFoundException;
-import java.text.Format;
 import java.text.NumberFormat;
 import java.time.LocalDateTime;
 
@@ -85,14 +84,20 @@ public class OverviewViewModel {
 	@FXML
     private MenuItem importBudgetMenuItem;
 	
+	@FXML
+	private MenuItem saveToCloudMenuItem;
+	
+	@FXML
+	private MenuItem closeMenuItem;
+	
 	private OverView overview;
 	
 	private StringConverter<Number> numberConverter;
 	
 	public OverviewViewModel(String username) {
 		this.categoryView = new TableView<Category>();
-		this.overview.loadUser();
 		this.overview = new OverView(username);
+		this.overview.loadUser();
 		this.numberConverter = new NumberStringConverter(NumberFormat.getCurrencyInstance());
 	}
 	
@@ -206,8 +211,27 @@ public class OverviewViewModel {
 	
 	@FXML
     void ChangeBudget(ActionEvent event) {
-
+		this.overview.setCurrentBudget(this.budgetSelector.selectionModelProperty().get().getSelectedIndex());
     }
+	
+	@FXML
+	void save(ActionEvent event) {
+		Alert alert = null;
+		if(this.overview.uploadBudget()) {
+			alert = new Alert(AlertType.INFORMATION);
+			alert.contentTextProperty().set("Pushed Successfully");
+		}  else {
+			alert = new Alert(AlertType.ERROR);
+			alert.contentTextProperty().set("Did not push successfully.");			
+		}
+		
+		alert.show();
+	}
+	
+	@FXML
+	void close(ActionEvent event) {
+		System.exit(0);
+	}
 	
 	private void showAddCategoryView(NewCategoryViewController controller) {
 		try {
