@@ -52,18 +52,15 @@ public class OverView {
 		this.name = new SimpleStringProperty();
 
 		this.currentUser = username;
+	}
 
-		this.loadUser();
-
+	public void loadUser() {
+		ImportServerData serverImporter = new ImportServerData();
+		this.budgets.addAll(serverImporter.pullFromServer(this.currentUser));
 		
 		if (this.budgets.size() > 0) {
 			this.setCurrentBudget(0);
 		}
-	}
-
-	private void loadUser() {
-		ImportServerData serverImporter = new ImportServerData();
-		this.budgets.addAll(serverImporter.pullFromServer(this.currentUser));
 	}
 
 	/**

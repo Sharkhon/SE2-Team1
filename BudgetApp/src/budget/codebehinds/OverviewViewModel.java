@@ -90,7 +90,8 @@ public class OverviewViewModel {
 	private StringConverter<Number> numberConverter;
 	
 	public OverviewViewModel(String username) {
-		this.categoryView = new TableView<Category>();	
+		this.categoryView = new TableView<Category>();
+		this.overview.loadUser();
 		this.overview = new OverView(username);
 		this.numberConverter = new NumberStringConverter(NumberFormat.getCurrencyInstance());
 	}
