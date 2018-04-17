@@ -120,7 +120,7 @@ public class NewTransactionDialogController implements ChangeListener<Toggle> {
     			if(this.group.getSelectedToggle().equals(this.InflowRadioButton)) {
         			this.overview.addNewInflow(amount, date, title);
         		} else {
-        			Category category = this.CategoriesComboBox.getValue();
+        			String category = this.CategoriesComboBox.getValue().getName().get();
         			this.overview.addNewOutflow(amount, date, title, category);
         		}
     			

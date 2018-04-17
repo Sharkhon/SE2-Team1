@@ -128,18 +128,21 @@ public class Budget {
 		if(inflow == null) {
 			throw new IllegalArgumentException("Cannot add null transaction.");
 		}
-		
-		this.overallAmount.add(inflow.getAmount().doubleValue());
+		double inflowValue = inflow.getAmount().doubleValue();
+		this.overallAmount.add(inflowValue);
 		this.transactions.add(inflow);
+		this.overallAmount = (new SimpleDoubleProperty(this.unallocatedAmount.add(inflowValue).doubleValue()));
 	}
 	
 	public void addOutflow(Transaction outflow, String categoryName) {
 		if(outflow == null) {
 			throw new IllegalArgumentException("Cannot add null transaction.");
 		}
-		
-		this.overallAmount.add(outflow.getAmount().doubleValue());
-		this.getCategoryByName(categoryName).addToSpentAmount(outflow.getAmount().get());
+		double outflowValue = outflow.getAmount().doubleValue();
+		this.overallAmount.add(outflowValue);
+		this.transactions.add(outflow);
+		this.overallAmount = (new SimpleDoubleProperty(this.unallocatedAmount.subtract(outflowValue).doubleValue()));
+		this.getCategoryByName(categoryName).addToSpentAmount(outflow.getAmount().get()); 
 		
 	}
 	

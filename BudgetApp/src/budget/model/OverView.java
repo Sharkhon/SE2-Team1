@@ -54,11 +54,11 @@ public class OverView {
 
 		this.currentUser = username;
 	}
-	
+
 	public OverView(String username, ArrayList<Budget> budgets) {
 		this(username);
 		this.budgets.addAll(budgets);
-		if(this.budgets.size() > 1) {
+		if (this.budgets.size() > 1) {
 			this.setCurrentBudget(0);
 		}
 	}
@@ -170,11 +170,11 @@ public class OverView {
 	 * @return the category if
 	 */
 	public Category getSpecificCategory(String name) {
-		if(name == null) {
+		if (name == null) {
 			throw new IllegalArgumentException("name cannot be null");
 		}
-		if(name.isEmpty()) {
-			throw new IllegalArgumentException("Must Provide a Name"); 
+		if (name.isEmpty()) {
+			throw new IllegalArgumentException("Must Provide a Name");
 		}
 		return this.currentBudget.getCategoryByName(name);
 	}
@@ -206,10 +206,15 @@ public class OverView {
 	public void addNewInflow(double amount, LocalDateTime date, String title) {
 		Inflow inflow = new Inflow(amount, date, title);
 		this.currentBudget.addInflow(inflow);
+		this.currentTransactions.add(inflow);
+		this.overallBalanceLabel = new SimpleDoubleProperty(this.overallBalanceLabel.add(amount).doubleValue());
 	}
 
-	public void addNewOutflow(double amount, LocalDateTime date, String title, Category category) {
+	public void addNewOutflow(double amount, LocalDateTime date, String title, String categoryName) {
+		Category category = this.getSpecificCategory(categoryName);
 		this.currentBudget.addOutflow(new Outflow(amount, date, title, category), category.getName().get());
+		this.currentTransactions.add(new Outflow(amount, date, title, category));
+		this.overallBalanceLabel = new SimpleDoubleProperty(this.overallBalanceLabel.subtract(amount).doubleValue());
 	}
 
 	public void RemoveTransaction(Transaction toDelete) {
