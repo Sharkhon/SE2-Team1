@@ -6,13 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDateTime;
 
-import org.junit.Rule;
 import org.junit.jupiter.api.Test;
-import org.junit.rules.ExpectedException;
-
-import budget.model.Category;
+																						
 import budget.model.Inflow;
-import budget.model.Outflow;
 import budget.model.Transaction;
 import javafx.beans.property.StringProperty;
 import javafx.beans.property.SimpleStringProperty;

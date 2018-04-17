@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 import org.junit.jupiter.api.Test;
 
 import budget.model.Budget;
-import budget.model.Category;
 import budget.model.OverView;
 
 class TestAddNewOutflow {

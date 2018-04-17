@@ -3,10 +3,7 @@ package budget.codebehinds;
 import java.time.LocalDateTime;
 
 import budget.model.Category;
-import budget.model.Inflow;
-import budget.model.Outflow;
 import budget.model.OverView;
-import budget.model.Transaction;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;

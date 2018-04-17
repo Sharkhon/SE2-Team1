@@ -2,12 +2,10 @@ package budget.testing.testOverview;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
 import budget.model.Budget;
-import budget.model.Category;
 import budget.model.OverView;
 
 class TestUpdateCategoryAmounts {
