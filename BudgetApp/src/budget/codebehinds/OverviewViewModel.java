@@ -90,6 +90,9 @@ public class OverviewViewModel {
 	@FXML
 	private MenuItem closeMenuItem;
 	
+	@FXML
+	private MenuItem deleteBudgetMenuItem;
+	
 	private OverView overview;
 	
 	private StringConverter<Number> numberConverter;
@@ -211,26 +214,38 @@ public class OverviewViewModel {
 	
 	@FXML
     void ChangeBudget(ActionEvent event) {
-		this.overview.setCurrentBudget(this.budgetSelector.selectionModelProperty().get().getSelectedIndex());
+		if(this.budgetSelector.selectionModelProperty().get().getSelectedIndex() > -1) {
+			this.overview.setCurrentBudget(this.budgetSelector.selectionModelProperty().get().getSelectedIndex());
+		}
     }
 	
 	@FXML
 	void save(ActionEvent event) {
-		Alert alert = null;
 		if(this.overview.uploadBudget()) {
-			alert = new Alert(AlertType.INFORMATION);
-			alert.contentTextProperty().set("Pushed Successfully");
+			this.showAlert("Pushed Successfully", AlertType.INFORMATION);
 		}  else {
-			alert = new Alert(AlertType.ERROR);
-			alert.contentTextProperty().set("Did not push successfully.");			
+			this.showAlert("Did not push successfully", AlertType.ERROR);			
 		}
-		
-		alert.show();
 	}
 	
 	@FXML
 	void close(ActionEvent event) {
 		System.exit(0);
+	}
+	
+	@FXML
+	void deleteCurrentBudget(ActionEvent event) {
+		if(this.overview.removeCurrentBudget()) {
+			this.showAlert("Budget is deleted", AlertType.INFORMATION);
+		} else {
+			this.showAlert("Budget could not be deleted", AlertType.ERROR);
+		}
+	}
+	
+	private void showAlert(String message, AlertType type) {
+		Alert alert = new Alert(type);
+		alert.setContentText(message);
+		alert.show();	
 	}
 	
 	private void showAddCategoryView(NewCategoryViewController controller) {

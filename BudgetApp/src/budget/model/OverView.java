@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import budget.io.Exporter;
 import budget.io.ImportServerData;
+import budget.server.ServerAccess;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -65,6 +66,7 @@ public class OverView {
 
 	public void loadUser() {
 		ImportServerData serverImporter = new ImportServerData();
+		this.budgets.clear();
 		this.budgets.addAll(serverImporter.pullFromServer(this.currentUser));
 
 		if (this.budgets.size() > 0) {
@@ -75,6 +77,16 @@ public class OverView {
 	public boolean uploadBudget() {
 		Exporter export = new Exporter();
 		return export.ExportBudgetToServer(this.currentUser, this.currentBudget);
+	}
+	
+	public boolean removeCurrentBudget() {
+		boolean out = ServerAccess.deleteBudget(this.currentUser, this.currentBudget.getName());
+		
+		if(out) {
+			this.loadUser();
+		}
+		
+		return out;
 	}
 
 	/**
