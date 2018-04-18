@@ -185,11 +185,11 @@ public class OverviewViewModel {
 	@FXML
 	public void DeleteItem() {
 		if(this.categoryView.isVisible() && this.categoryView.getSelectionModel().getSelectedItem() != null) {
-			this.overview.RemoveCategory(this.categoryView.getSelectionModel().getSelectedItem());
+			this.overview.RemoveCategory(this.categoryView.getSelectionModel().getSelectedItem().getName().get());
 		}
 		
 		if(this.transactionView.isVisible() && this.transactionView.getSelectionModel().getSelectedItem() != null) {
-			this.overview.RemoveTransaction(this.transactionView.getSelectionModel().getSelectedItem());
+			this.overview.RemoveTransaction(this.transactionView.getSelectionModel().getSelectedItem().getTitle().get());
 		}
 	}
 	

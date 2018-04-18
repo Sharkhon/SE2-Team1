@@ -211,23 +211,31 @@ public class OverView {
 
 	public void addNewOutflow(double amount, LocalDateTime date, String title, String categoryName) {
 		Category category = this.getSpecificCategory(categoryName);
-		this.currentBudget.addOutflow(new Outflow(amount, date, title, category), category.getName().get());
-		this.currentTransactions.add(new Outflow(amount, date, title, category));
+		Outflow outflow = new Outflow(amount, date, title, category);
+		this.currentBudget.addOutflow(outflow, category.getName().get());
+		this.currentTransactions.add(outflow);
 		this.overallBalanceLabel = new SimpleDoubleProperty(this.overallBalanceLabel.subtract(amount).doubleValue());
 	}
 
-	public void RemoveTransaction(Transaction toDelete) {
-		this.currentTransactions.remove(toDelete);
-		this.currentBudget.removeTransaction(toDelete);
+	public void RemoveTransaction(String title) {
+		this.currentTransactions.remove(this.currentBudget.getTransactionByName(title));
+		this.currentBudget.removeTransaction(this.currentBudget.getTransactionByName(title));
 	}
 
-	public void RemoveCategory(Category toDelete) {
-		this.currentCategories.remove(toDelete);
-		this.currentBudget.deleteCategory(toDelete);
+	public void RemoveCategory(String toDelete) {
+		this.currentCategories.remove(this.currentBudget.getCategoryByName(toDelete));
+		this.currentBudget.deleteCategory(this.getCurrentBudget().getCategoryByName(toDelete));
 	}
+	
+
+		
+
+		
+	
 
 	public void addBudget(Budget budget) {
 		this.budgets.add(budget);
+		
 	}
 
 	/**
