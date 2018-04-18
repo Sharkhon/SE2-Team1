@@ -1,6 +1,6 @@
-gamer,budget2,200.00,100.00~
+gamer,budget2,200.0,100.0~
 **Categories**~
-cat1,100.00,50~
+cat1,100.0,50.0~
 **Transactions**~
-inflow1,2018-04-16T23:47:24.135249,200.00,true,N/A~
-outflow1,2018-04-17T23:47:24.135249,50.00,false,cat1~
+inflow1,2018-04-16T23:47:24.135249,200.0,true,N/A~
+outflow1,2018-04-17T23:47:24.135249,50.0,false,cat1~

@@ -6,6 +6,7 @@ package budget.model;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+import budget.io.Exporter;
 import budget.io.ImportServerData;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -69,6 +70,11 @@ public class OverView {
 		if (this.budgets.size() > 0) {
 			this.setCurrentBudget(0);
 		}
+	}
+	
+	public boolean uploadBudget() {
+		Exporter export = new Exporter();
+		return export.ExportBudgetToServer(this.currentUser, this.currentBudget);
 	}
 
 	/**
