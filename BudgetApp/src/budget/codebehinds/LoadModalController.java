@@ -48,6 +48,11 @@ public class LoadModalController {
     
     @FXML
     public void create(ActionEvent event) {
+    		if(this.usernameBox.textProperty().get().isEmpty() || this.passwordBox.textProperty().get().isEmpty()) {
+    			this.showErrorMessage("Please have correct input");
+    			return;
+    		}
+    	
     		if(ServerAccess.newUser(this.usernameBox.getText(), this.passwordBox.getText())) {
     			this.showErrorMessage("User created, now login");
     		} else {
