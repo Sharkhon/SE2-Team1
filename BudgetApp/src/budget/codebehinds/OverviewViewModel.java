@@ -91,6 +91,9 @@ public class OverviewViewModel {
 	private MenuItem closeMenuItem;
 	
 	@FXML
+	private MenuItem newBudgetMenuItem;
+	
+	@FXML
 	private MenuItem deleteBudgetMenuItem;
 	
 	private OverView overview;
@@ -242,6 +245,11 @@ public class OverviewViewModel {
 		}
 	}
 	
+	@FXML
+	void addNewBudget(ActionEvent event) {
+		this.showNewBudgetView();
+	}
+	
 	private void showAlert(String message, AlertType type) {
 		Alert alert = new Alert(type);
 		alert.setContentText(message);
@@ -270,6 +278,23 @@ public class OverviewViewModel {
 			Stage primaryStage = new Stage();
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/NewTransactionDialog.fxml"));
 			loader.setController(controller);
+			Parent root = loader.load();
+			
+			Scene scene = new Scene(root, 450, 275);
+			primaryStage.setScene(scene);
+			primaryStage.initOwner(this.AddButton.getScene().getWindow());
+			primaryStage.initModality(Modality.APPLICATION_MODAL);
+			primaryStage.showAndWait();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void showNewBudgetView() {
+		try {
+			Stage primaryStage = new Stage();
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/NewBudgetView.fxml"));
+			loader.setController(new NewBudgetViewModel(this.overview));
 			Parent root = loader.load();
 			
 			Scene scene = new Scene(root, 450, 275);

@@ -252,7 +252,13 @@ public class OverView {
 	
 
 	public void addBudget(Budget budget) {
-		this.budgets.add(budget);
+		Exporter exporter = new Exporter();
+		
+		if(exporter.ExportBudgetToServer(this.currentUser, budget)) {
+			this.budgets.add(budget);
+		}
+		
+		
 		
 	}
 
