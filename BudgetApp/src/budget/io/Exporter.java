@@ -20,13 +20,17 @@ public class Exporter {
 	 */
 	
 	private String lineSeparator = "~\n";
-	public boolean ExportBudgetToServer(String username, Budget toExport) {		
+	public boolean ExportBudgetToServer(String username, Budget toExport) {	
+		if(username == null || username.isEmpty() || toExport == null) {
+			throw new IllegalArgumentException("Invlaid arguments to export budget");
+		}
+		
 		return ServerAccess.pushBudget(username, toExport.getName(), this.PrepareExport(username, toExport));
 	}
 	
 	private String PrepareExport(String username, Budget toExport) {
 		StringBuilder sb = new StringBuilder();
-		sb.append(username + "," + toExport.getName() + "," + toExport.getOverallAmount().get() + "," + toExport.getUnallocatedAmount().get() + this.lineSeparator);
+		sb.append(username + "," + toExport.getName() + "," + toExport.getOverallAmount().doubleValue() + "," + toExport.getUnallocatedAmount().doubleValue() + this.lineSeparator);
 		sb.append(this.prepareCategories(toExport.getCategories()));
 		sb.append(prepareTransactions(toExport.getTransactions()));
 		
@@ -36,7 +40,7 @@ public class Exporter {
 	private String prepareCategories(ArrayList<Category> categories) {
 		StringBuilder categoryBuilder = new StringBuilder("**Categories**" + this.lineSeparator);
 		for (Category category : categories) {
-			categoryBuilder.append(category.getName() + "," + category.getAllocatedAmount().get() + "," + category.getSpentAmount().get() + this.lineSeparator);
+			categoryBuilder.append(category.getName().getValue() + "," + category.getAllocatedAmount().doubleValue() + "," + category.getSpentAmount().doubleValue() + this.lineSeparator);
 		}
 		
 		return categoryBuilder.toString();
@@ -46,9 +50,9 @@ public class Exporter {
 		StringBuilder transactionBuilder = new StringBuilder("**Transactions**" + this.lineSeparator);
 		for (Transaction transaction : transactions) {
 			if(transaction instanceof Outflow) {
-				transactionBuilder.append(transaction.getTitle() + "," + transaction.getDate() + "," + transaction.getAmount().get() + ",false," + ((Outflow)transaction).getCategoryName().get() + this.lineSeparator);
+				transactionBuilder.append(transaction.getTitle().getValue().toString() + "," + transaction.getDate().getValue() + "," + transaction.getAmount().doubleValue() + ",false," + ((Outflow)transaction).getCategoryName().get().toString() + this.lineSeparator);
 			} else {
-				transactionBuilder.append(transaction.getTitle() + "," + transaction.getDate() + "," + transaction.getAmount().get() + ",true,N/A" + this.lineSeparator);
+				transactionBuilder.append(transaction.getTitle().getValue().toString() + "," + transaction.getDate().getValue() + "," + transaction.getAmount().doubleValue() + ",true,N/A" + this.lineSeparator);
 			}
 		}
 		

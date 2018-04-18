@@ -1,3 +1,4 @@
 USERNAME,PASSWORD
+test,user
 gamer,daniel
 rachetl,corey
