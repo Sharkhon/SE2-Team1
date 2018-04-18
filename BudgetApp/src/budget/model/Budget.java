@@ -97,6 +97,17 @@ public class Budget {
 		return null;
 	}
 	
+	public Transaction getTransactionByName(String transactionName) {
+		for(Transaction current : this.transactions) {
+			if(current.getTitle().get().equals(transactionName)) {
+				return current;
+			}
+			
+			
+		}
+		return null;
+	}
+	
 	/**
 	 * Gets the categories for the budget
 	 * @return

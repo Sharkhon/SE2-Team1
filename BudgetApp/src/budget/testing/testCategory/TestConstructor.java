@@ -53,6 +53,8 @@ class TestConstructor {
 		assertEquals(500, cat.getAllocatedAmount().get());
 
 		assertEquals(40, cat.getSpentAmount().get());
+		
+		assertEquals("Groceries", cat.toString());
 
 	}
 
