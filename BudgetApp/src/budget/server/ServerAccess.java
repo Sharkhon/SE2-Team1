@@ -35,6 +35,10 @@ public class ServerAccess {
 		return serverRequest("pull," + username + "," + budgetname);
 	}
 	
+	public static boolean deleteBudget(String username, String budgetname) {
+		return Boolean.parseBoolean(serverRequest("push delete," + username + "," + budgetname));
+	}
+	
 	private static String serverRequest(String request) {//TODO: Acutal Exception Handling
 		try {
 			InetAddress address = InetAddress.getByName(Driver.SERVER_URL);
@@ -67,7 +71,6 @@ public class ServerAccess {
 			e.printStackTrace();
 		}
 		return "Server Error";
-	}
-	
+	}	
 	
 }
