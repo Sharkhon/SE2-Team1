@@ -224,7 +224,7 @@ public class OverView {
 		Inflow inflow = new Inflow(amount, date, title);
 		this.currentBudget.addInflow(inflow);
 		this.currentTransactions.add(inflow);
-		this.overallBalanceLabel = new SimpleDoubleProperty(this.overallBalanceLabel.add(amount).doubleValue());
+		this.overallBalanceLabel = this.currentBudget.getOverallAmount();
 	}
 
 	public void addNewOutflow(double amount, LocalDateTime date, String title, String categoryName) {
@@ -243,6 +243,7 @@ public class OverView {
 	public void RemoveCategory(String toDelete) {
 		this.currentCategories.remove(this.currentBudget.getCategoryByName(toDelete));
 		this.currentBudget.deleteCategory(this.getCurrentBudget().getCategoryByName(toDelete));
+		this.unallocatedBalanceLabel = this.currentBudget.getUnallocatedAmount();
 	}
 	
 

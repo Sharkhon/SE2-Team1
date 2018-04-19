@@ -72,6 +72,7 @@ public class Budget {
 		}
 		
 		this.categories.add(category);
+		this.unallocatedAmount.set(this.unallocatedAmount.doubleValue() - category.getAllocatedAmount().doubleValue());
 	}
 	
 	/**
@@ -83,7 +84,7 @@ public class Budget {
 	 */
 	public void deleteCategory(Category category) {
 		if(this.categories.remove(category)) {
-			this.unallocatedAmount.add(category.getAllocatedAmount().doubleValue() - category.getSpentAmount().doubleValue());
+			this.unallocatedAmount.set(this.unallocatedAmount.doubleValue() + category.getAllocatedAmount().doubleValue() - category.getSpentAmount().doubleValue());
 		}
 		
 	}
@@ -140,9 +141,9 @@ public class Budget {
 			throw new IllegalArgumentException("Cannot add null transaction.");
 		}
 		double inflowValue = inflow.getAmount().doubleValue();
-		this.overallAmount.add(inflowValue);
+		this.overallAmount.set(this.overallAmount.doubleValue() + inflowValue);
 		this.transactions.add(inflow);
-		this.overallAmount = (new SimpleDoubleProperty(this.unallocatedAmount.add(inflowValue).doubleValue()));
+		this.unallocatedAmount.set(this.unallocatedAmount.doubleValue() + inflowValue);
 	}
 	
 	public void addOutflow(Transaction outflow, String categoryName) {
@@ -150,21 +151,22 @@ public class Budget {
 			throw new IllegalArgumentException("Cannot add null transaction.");
 		}
 		double outflowValue = outflow.getAmount().doubleValue();
-		this.overallAmount.add(outflowValue);
+		this.overallAmount.set(this.overallAmount.doubleValue() - outflowValue);
 		this.transactions.add(outflow);
-		this.overallAmount = (new SimpleDoubleProperty(this.unallocatedAmount.subtract(outflowValue).doubleValue()));
 		this.getCategoryByName(categoryName).addToSpentAmount(outflow.getAmount().get()); 
 		
 	}
 	
 	public void removeTransaction(Transaction toDelete) {
 		if(toDelete instanceof Outflow) {
-			this.overallAmount.add(toDelete.getAmount().doubleValue()) ;
+			this.overallAmount.set(this.overallAmount.doubleValue() + toDelete.getAmount().doubleValue()) ;
 			
-			this.getCategoryByName(((Outflow) toDelete).getCategoryName().get()).addToSpentAmount(-(toDelete.getAmount().get()));;
+			if(this.getCategoryByName(((Outflow) toDelete).getCategoryName().get()) != null) {
+				this.getCategoryByName(((Outflow) toDelete).getCategoryName().get()).addToSpentAmount(-(toDelete.getAmount().get()));
+			}
 		} else {
-			this.unallocatedAmount.add(toDelete.getAmount().doubleValue()) ;
-			this.overallAmount.add(toDelete.getAmount().doubleValue());
+			this.unallocatedAmount.set(this.unallocatedAmount.doubleValue() - toDelete.getAmount().doubleValue()) ;
+			this.overallAmount.set(this.overallAmount.doubleValue() - toDelete.getAmount().doubleValue());
 		}
 			
 		this.transactions.remove(toDelete);
